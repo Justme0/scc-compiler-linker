@@ -1,6 +1,8 @@
 // 《自己动手写编译器、链接器》配套源代码
 
 #include "scc.h"
+#include <string.h>
+#include <stdlib.h>
 
 /***********************************************************
  *  功能:		重新分配动态数组容量
@@ -31,7 +33,7 @@ void dynarray_add(DynArray *parr, void *data)
 {
  	int count;
     count = parr->count + 1;
-    if (count*sizeof(void*) > parr->capacity)
+    if (count*(int)(sizeof(void*)) > parr->capacity)
         dynarray_realloc(parr, count*sizeof(void*));
     parr->data[count - 1] = data;
     parr->count = count;  

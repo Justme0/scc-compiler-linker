@@ -1,6 +1,9 @@
 // 《自己动手写编译器、链接器》配套源代码
 
 #include "scc.h" 
+#include <string.h>
+#include <stdlib.h>
+
 TkWord* tk_hashtable[MAXKEY];	// 单词哈希表
 DynArray tktable;		// 单词表
 DynString tkstr; 
@@ -241,20 +244,20 @@ void parse_string(char sep)
  **********************************************************/
 void color_token(int lex_state)
 {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+ 	// HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	char *p;
 	switch(lex_state)
 	{
 	case LEX_NORMAL:
 		{
-			if(token >=  TK_IDENT)
-				SetConsoleTextAttribute(h,FOREGROUND_INTENSITY);
-			else if(token >= KW_CHAR)
-				SetConsoleTextAttribute(h,FOREGROUND_GREEN|FOREGROUND_INTENSITY);
-			else if(token >= TK_CINT)
-				SetConsoleTextAttribute(h,FOREGROUND_RED|FOREGROUND_GREEN);
-			else 
-				SetConsoleTextAttribute(h,FOREGROUND_RED|FOREGROUND_INTENSITY);		
+// 			if(token >=  TK_IDENT)
+// 				 SetConsoleTextAttribute(h,FOREGROUND_INTENSITY);
+// 			else if(token >= KW_CHAR)
+// 				 SetConsoleTextAttribute(h,FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+// 			else if(token >= TK_CINT)
+// 				 SetConsoleTextAttribute(h,FOREGROUND_RED|FOREGROUND_GREEN);
+// 			else 
+// 				 SetConsoleTextAttribute(h,FOREGROUND_RED|FOREGROUND_INTENSITY);		
 			p = get_tkstr(token);
 			printf("%s",p);
 			break;
