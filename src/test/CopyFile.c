@@ -1,6 +1,6 @@
-/* CopyFile.cÔ´ÎÄ¼ş */
+/* CopyFile.cæºæ–‡ä»¶ */
 /*********************************************************** 
- * ¹¦ÄÜ:	mainÖ÷º¯Êı
+ * åŠŸèƒ½:	mainä¸»å‡½æ•°
  **********************************************************/
  struct _iobuf 
  {
@@ -27,17 +27,17 @@ int main(int argc, char **argv, char **env)
   int EOF  = -1; 
   int SEEK_SET = 0;
 
-		printf("Ô´ÎÄ¼şÃû£º");
+		printf("æºæ–‡ä»¶åï¼š");
 	scanf("%s",srcfname);
 
-	printf("Ä¿±êÎÄ¼şÃû£º");
+	printf("ç›®æ ‡æ–‡ä»¶åï¼š");
 	scanf("%s",destfname);
 
 	srcfile=fopen(srcfname,"rb");
 	if(srcfile==NULL)
 	{
-		printf("¶ÁÈëÎÄ¼şÎ´ÕÒµ½£¡\n");
-		printf("°´ÈÎÒâ¼ü¼ÌĞø...");
+		printf("è¯»å…¥æ–‡ä»¶æœªæ‰¾åˆ°ï¼\n");
+		printf("æŒ‰ä»»æ„é”®ç»§ç»­...");
 		getchar();
 		exit(1); 
 	}
@@ -45,8 +45,8 @@ int main(int argc, char **argv, char **env)
 	destfile = fopen(destfname, "wb");
 	if(destfile==NULL) 
 	{
-		printf("Ğ´ÈëÎÄ¼şÎ´ÕÒµ½£¡\n");
-		printf("°´ÈÎÒâ¼ü¼ÌĞø...");
+		printf("å†™å…¥æ–‡ä»¶æœªæ‰¾åˆ°ï¼\n");
+		printf("æŒ‰ä»»æ„é”®ç»§ç»­...");
 		getchar();
 		fclose(srcfile);
 		exit(1);
@@ -61,13 +61,13 @@ int main(int argc, char **argv, char **env)
 	fclose(srcfile);
 	fclose(destfile);
 	
-	printf("°´ÈÎÒâ¼ü¼ÌĞø...");
+	printf("æŒ‰ä»»æ„é”®ç»§ç»­...");
 	getchar();
 	return 0;
 }
 
 /*********************************************************** 
- * ¹¦ÄÜ:	Èë¿Úº¯Êı
+ * åŠŸèƒ½:	å…¥å£å‡½æ•°
  **********************************************************/
 void  _entry()
 {

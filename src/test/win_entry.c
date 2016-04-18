@@ -1,23 +1,23 @@
-/* win_entry.cÔ´ÎÄ¼ş */
-/* ³ÌĞòÓÃµ½µÄÍâ²¿º¯ÊıÉùÃ÷ */
+/* win_entry.cæºæ–‡ä»¶ */
+/* ç¨‹åºç”¨åˆ°çš„å¤–éƒ¨å‡½æ•°å£°æ˜ */
 int	  __stdcall	MessageBoxA(void* hWnd, char* lpText,  
 														char* lpCaption,  int uType);
 int __stdcall GetModuleHandleA(char* lpModuleName);
 char* __stdcall GetCommandLineA();
 /*********************************************************** 
- * ¹¦ÄÜ:	WinMainÖ÷º¯Êı
+ * åŠŸèƒ½:	WinMainä¸»å‡½æ•°
  **********************************************************/
 int __stdcall WinMain (void* hInstance, void* hPrevInstance,
                     char* szCmdLine, int iCmdShow)
 {
 	  int MB_OK = 0;  /* 0x00000000L */
 	  int MB_ICONINFORMATION = 64; /* 0x00000040L */
-    MessageBoxA(0,szCmdLine,"Ö§³Ö´«ÈëÃüÁîĞĞ²ÎÊıµÄWin32Ó¦ÓÃ³ÌĞò:", MB_OK + MB_ICONINFORMATION); 
+    MessageBoxA(0,szCmdLine,"æ”¯æŒä¼ å…¥å‘½ä»¤è¡Œå‚æ•°çš„Win32åº”ç”¨ç¨‹åº:", MB_OK + MB_ICONINFORMATION); 
     return 1 ;
 }
 
 /*********************************************************** 
- * ¹¦ÄÜ:	Èë¿Úº¯Êı
+ * åŠŸèƒ½:	å…¥å£å‡½æ•°
  **********************************************************/
 int _entry()
 {

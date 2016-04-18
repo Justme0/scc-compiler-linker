@@ -1,5 +1,5 @@
-/* HelloWindows.cÔ´ÎÄ¼ş */
-/* ³ÌĞòÓÃµ½µÄ½á¹¹¶¨Òå */
+/* HelloWindows.cæºæ–‡ä»¶ */
+/* ç¨‹åºç”¨åˆ°çš„ç»“æ„å®šä¹‰ */
 struct tagPOINT
 {
     int  x;
@@ -70,7 +70,7 @@ struct _STARTUPINFOA
     void* 	hStdError;
 };
 
-/* ³ÌĞòÓÃµ½µÄº¯ÊıÉùÃ÷ */
+/* ç¨‹åºç”¨åˆ°çš„å‡½æ•°å£°æ˜ */
 void* __stdcall LoadIconA(void* hInstance,  char* lpIconName);
 void* __stdcall LoadCursorA(void* hInstance,  char* lpCursorName);
 void* __stdcall GetStockObject(int c);
@@ -98,7 +98,7 @@ void 	__stdcall PostQuitMessage(int nExitCode);
 int __stdcall DefWindowProcA(void* hWnd,int Msg,int wParam,int lParam);
 int __stdcall WndProc (void *a, int b, int c , int d) ;
 
-/* ³ÌĞòÓÃµ½µÄ³£Á¿¶¨Òå */
+/* ç¨‹åºç”¨åˆ°çš„å¸¸é‡å®šä¹‰ */
 char* szAppName 					= "HelloWin";
 int   NULL 								= 0;
 int 	CS_VREDRAW 					= 1;					
@@ -117,7 +117,7 @@ int 	DT_VCENTER 					= 4;
 int 	SW_SHOWDEFAULT 			= 10;
 
 /*********************************************************** 
- * ¹¦ÄÜ:	WinMainÖ÷º¯Êıº¯Êı
+ * åŠŸèƒ½:	WinMainä¸»å‡½æ•°å‡½æ•°
  **********************************************************/
 int __stdcall WinMain (void* hInstance, void* hPrevInstance,
                        char* szCmdLine, int iCmdShow)
@@ -139,7 +139,7 @@ int __stdcall WinMain (void* hInstance, void* hPrevInstance,
      
      if (RegisterClassA (&wndclass) == 0)
      {
-          MessageBoxA (NULL, "Cann¡¯t RegisterClass!", szAppName, MB_ICONERROR);
+          MessageBoxA (NULL, "Cannâ€™t RegisterClass!", szAppName, MB_ICONERROR);
           return 0 ;
      }
 
@@ -170,7 +170,7 @@ int __stdcall WinMain (void* hInstance, void* hPrevInstance,
 }
  
 /*********************************************************** 
- * ¹¦ÄÜ:	´°¿ÚÏûÏ¢´¦Àíº¯Êı
+ * åŠŸèƒ½:	çª—å£æ¶ˆæ¯å¤„ç†å‡½æ•°
  **********************************************************/
 int __stdcall WndProc (void* hwnd, int message, int wParam, int lParam)
 {
@@ -197,7 +197,7 @@ int __stdcall WndProc (void* hwnd, int message, int wParam, int lParam)
 }
 
 /*********************************************************** 
- * ¹¦ÄÜ:	Èë¿Úº¯Êı
+ * åŠŸèƒ½:	å…¥å£å‡½æ•°
  **********************************************************/
 int _entry()
 {

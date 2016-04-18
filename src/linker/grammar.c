@@ -1,11 +1,11 @@
-// ¡¶×Ô¼º¶¯ÊÖĞ´±àÒëÆ÷¡¢Á´½ÓÆ÷¡·ÅäÌ×Ô´´úÂë
+// ã€Šè‡ªå·±åŠ¨æ‰‹å†™ç¼–è¯‘å™¨ã€é“¾æ¥å™¨ã€‹é…å¥—æºä»£ç 
 
 #include "scc.h"
 int syntax_state;
 int syntax_level;
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö·­Òëµ¥Î»
+ * åŠŸèƒ½:	è§£æç¿»è¯‘å•ä½
  *
  * <translation_unit>::={external_declaration}<TK_EOF>
  **********************************************************/
@@ -18,8 +18,8 @@ void translation_unit()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöÍâ²¿ÉùÃ÷
- * l:		´æ´¢ÀàĞÍ£¬¾Ö²¿µÄ»¹ÊÇÈ«¾ÖµÄ
+ * åŠŸèƒ½:	è§£æå¤–éƒ¨å£°æ˜
+ * l:		å­˜å‚¨ç±»å‹ï¼Œå±€éƒ¨çš„è¿˜æ˜¯å…¨å±€çš„
  *
  * <external_declaration>::=<function_definition>|<declaration>
  *
@@ -34,7 +34,7 @@ void translation_unit()
  * <init_declarator>::=
  *      <declarator>|<declarator> <TK_ASSIGN><initializer>
  *
- * ¸ÄĞ´ºóÎÄ·¨£º
+ * æ”¹å†™åæ–‡æ³•ï¼š
  * <external_declaration>::=
  *  <type_specifier> (<TK_SEMICOLON> 
  *      |<declarator><funcbody>
@@ -51,7 +51,7 @@ void external_declaration(int l)
 
 	if (!type_specifier(&btype)) 
 	{
-		expect("<ÀàĞÍÇø·Ö·û>");
+		expect("<ç±»å‹åŒºåˆ†ç¬¦>");
 	}
 	
 	if (btype.t == T_STRUCT && token == TK_SEMICOLON) 
@@ -64,19 +64,19 @@ void external_declaration(int l)
 		type = btype;
 		declarator (&type, &v,NULL);
 
-		if (token == TK_BEGIN) //º¯Êı¶¨Òå
+		if (token == TK_BEGIN) //å‡½æ•°å®šä¹‰
 		{
 			if (l == SC_LOCAL)
-				error("²»Ö§³Öº¯ÊıÇ¶Ì×¶¨Òå");
+				error("ä¸æ”¯æŒå‡½æ•°åµŒå¥—å®šä¹‰");
 			
 			if ((type.t & T_BTYPE) != T_FUNC)
-				expect("<º¯Êı¶¨Òå>");	
+				expect("<å‡½æ•°å®šä¹‰>");	
 			
 			sym = sym_search(v);
-			if (sym)	// º¯ÊıÇ°ÃæÉùÃ÷¹ı£¬ÏÖÔÚ¸ø³öº¯Êı¶¨Òå
+			if (sym)	// å‡½æ•°å‰é¢å£°æ˜è¿‡ï¼Œç°åœ¨ç»™å‡ºå‡½æ•°å®šä¹‰
 			{
 				if ((sym->type.t & T_BTYPE) != T_FUNC)
-					error("'%s'ÖØ¶¨Òå", get_tkstr(v));
+					error("'%s'é‡å®šä¹‰", get_tkstr(v));
 				sym->type = type;
 			}
 			else
@@ -89,14 +89,14 @@ void external_declaration(int l)
 		}
 		else
 		{
-			if ((type.t & T_BTYPE) == T_FUNC) // º¯ÊıÉùÃ÷
+			if ((type.t & T_BTYPE) == T_FUNC) // å‡½æ•°å£°æ˜
 			{
 				if (sym_search(v) == NULL)
 				{
 					sym_push(v, &type, SC_GLOBAL | SC_SYM, 0);
 				}
 			}
-			else //±äÁ¿ÉùÃ÷
+			else //å˜é‡å£°æ˜
 			{
 				r=0;
 				if (!(type.t & T_ARRAY))
@@ -107,7 +107,7 @@ void external_declaration(int l)
 
 				if(has_init)
 				{
-					get_token(); //²»ÄÜ·Åµ½ºóÃæ£¬char str[]="abc"Çé¿ö£¬ĞèÒªallocate_storageÇó×Ö·û´®³¤¶È				    
+					get_token(); //ä¸èƒ½æ”¾åˆ°åé¢ï¼Œchar str[]="abc"æƒ…å†µï¼Œéœ€è¦allocate_storageæ±‚å­—ç¬¦ä¸²é•¿åº¦				    
 				}
 		
 				sec = allocate_storage(&type,r, has_init, v, &addr); 
@@ -136,10 +136,10 @@ void external_declaration(int l)
 
 
 /*********************************************************** 
- * ¹¦ÄÜ:	½âÎö³õÖµ·û
- * type:	±äÁ¿ÀàĞÍ
- * c:		±äÁ¿Ïà¹ØÖµ
- * sec:		±äÁ¿ËùÔÚ½Ú
+ * åŠŸèƒ½:	è§£æåˆå€¼ç¬¦
+ * type:	å˜é‡ç±»å‹
+ * c:		å˜é‡ç›¸å…³å€¼
+ * sec:		å˜é‡æ‰€åœ¨èŠ‚
  *
  * < initializer>::=<assignment_expression>
  **********************************************************/
@@ -158,9 +158,9 @@ void initializer(Type *type, int c, Section *sec)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:		ÀàĞÍÇø·Ö·û
- * type(Êä³ö):	Êı¾İÀàĞÍ
- * ·µ»ØÖµ:		ÊÇ·ñ·¢ÏÖºÏ·¨µÄÀàĞÍÇø·Ö·û
+ * åŠŸèƒ½:		ç±»å‹åŒºåˆ†ç¬¦
+ * type(è¾“å‡º):	æ•°æ®ç±»å‹
+ * è¿”å›å€¼:		æ˜¯å¦å‘ç°åˆæ³•çš„ç±»å‹åŒºåˆ†ç¬¦
  *
  * <type_specifier>::= <KW_INT> 
  *		| <KW_CHAR> 
@@ -215,8 +215,8 @@ int type_specifier(Type *type)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:		½âÎö½á¹¹Çø·Ö·û
- * type(Êä³ö):	½á¹¹ÀàĞÍ
+ * åŠŸèƒ½:		è§£æç»“æ„åŒºåˆ†ç¬¦
+ * type(è¾“å‡º):	ç»“æ„ç±»å‹
  *
  * <struct_specifier>::= 
  *	<KW_STRUCT><IDENTIFIER><TK_BEGIN><struct_declaration_list><TK_END> 
@@ -231,24 +231,24 @@ void struct_specifier(Type *type)
     get_token();	
 	v = token;
 	
-	syntax_state = SNTX_DELAY;      // ĞÂÈ¡µ¥´Ê²»¼´Ê±Êä³ö£¬ÑÓ³Ùµ½È¡³öµ¥´Êºó¸ù¾İµ¥´ÊÀàĞÍÅĞ¶ÏÊä³ö¸ñÊ½
+	syntax_state = SNTX_DELAY;      // æ–°å–å•è¯ä¸å³æ—¶è¾“å‡ºï¼Œå»¶è¿Ÿåˆ°å–å‡ºå•è¯åæ ¹æ®å•è¯ç±»å‹åˆ¤æ–­è¾“å‡ºæ ¼å¼
 	get_token();
 	
-	if(token == TK_BEGIN)			// ÊÊÓÃÓÚ½á¹¹Ìå¶¨Òå
+	if(token == TK_BEGIN)			// é€‚ç”¨äºç»“æ„ä½“å®šä¹‰
 		syntax_state = SNTX_LF_HT;
-	else if(token == TK_CLOSEPA)	// ÊÊÓÃÓÚ sizeof(struct struct_name)
+	else if(token == TK_CLOSEPA)	// é€‚ç”¨äº sizeof(struct struct_name)
 		syntax_state = SNTX_NUL;
-	else							// ÊÊÓÃÓÚ½á¹¹±äÁ¿ÉùÃ÷
+	else							// é€‚ç”¨äºç»“æ„å˜é‡å£°æ˜
 		syntax_state = SNTX_SP;
 	syntax_indent();	
 	
-	if (v < TK_IDENT)				// ¹Ø¼ü×Ö²»ÄÜ×÷Îª½á¹¹Ãû³Æ
-		expect("½á¹¹ÌåÃû");
+	if (v < TK_IDENT)				// å…³é”®å­—ä¸èƒ½ä½œä¸ºç»“æ„åç§°
+		expect("ç»“æ„ä½“å");
 	s = struct_search(v);
 	if (!s) 
 	{		
 		type1.t = KW_STRUCT;
-		// -1±íÊ¾½á¹¹ÌåÎ´¶¨Òå
+		// -1è¡¨ç¤ºç»“æ„ä½“æœªå®šä¹‰
 		s = sym_push(v | SC_STRUCT, &type1, 0, -1);
 		s->r = 0;
 	} 
@@ -263,8 +263,8 @@ void struct_specifier(Type *type)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:		½âÎö½á¹¹ÉùÃ÷·û±í
- * type(Êä³ö):	½á¹¹ÀàĞÍ
+ * åŠŸèƒ½:		è§£æç»“æ„å£°æ˜ç¬¦è¡¨
+ * type(è¾“å‡º):	ç»“æ„ç±»å‹
  *
  * <struct_declaration_list>::=<struct_declaration>{<struct_declaration>}
  **********************************************************/
@@ -273,11 +273,11 @@ void struct_declaration_list(Type *type)
     int maxalign, offset;
     Symbol *s,**ps;
 	s = type->ref;
-	syntax_state = SNTX_LF_HT;   // µÚÒ»¸ö½á¹¹Ìå³ÉÔ±Óë'{'²»Ğ´ÔÚÒ»ĞĞ
-	syntax_level++;              // ½á¹¹Ìå³ÉÔ±±äÁ¿ÉùÃ÷£¬Ëõ½øÔö¼ÓÒ»¼¶
+	syntax_state = SNTX_LF_HT;   // ç¬¬ä¸€ä¸ªç»“æ„ä½“æˆå‘˜ä¸'{'ä¸å†™åœ¨ä¸€è¡Œ
+	syntax_level++;              // ç»“æ„ä½“æˆå‘˜å˜é‡å£°æ˜ï¼Œç¼©è¿›å¢åŠ ä¸€çº§
 	get_token();
 	if (s->c != -1)
-		error("½á¹¹ÌåÒÑ¶¨Òå");
+		error("ç»“æ„ä½“å·²å®šä¹‰");
 	maxalign = 1;
 	ps = &s->next;
 	offset = 0;
@@ -288,15 +288,15 @@ void struct_declaration_list(Type *type)
 	skip(TK_END);
 	syntax_state = SNTX_LF_HT;
 	
-	s->c = calc_align(offset,maxalign);//½á¹¹Ìå´óĞ¡
-	s->r = maxalign; //½á¹¹Ìå¶ÔÆë
+	s->c = calc_align(offset,maxalign);//ç»“æ„ä½“å¤§å°
+	s->r = maxalign; //ç»“æ„ä½“å¯¹é½
 }
 
 /***********************************************************
- * ¹¦ÄÜ:				½âÎö½á¹¹ÉùÃ÷
- * maxalign(ÊäÈë,Êä³ö):	³ÉÔ±×î´ó¶ÔÆëÁ£¶È
- * offset(ÊäÈë,Êä³ö):	Æ«ÒÆÁ¿
- * ps(Êä³ö):			½á¹¹¶¨Òå·ûºÅ
+ * åŠŸèƒ½:				è§£æç»“æ„å£°æ˜
+ * maxalign(è¾“å…¥,è¾“å‡º):	æˆå‘˜æœ€å¤§å¯¹é½ç²’åº¦
+ * offset(è¾“å…¥,è¾“å‡º):	åç§»é‡
+ * ps(è¾“å‡º):			ç»“æ„å®šä¹‰ç¬¦å·
  *
  * <struct_declaration>::=
  *		<type_specifier><struct_declarator_list><TK_SEMICOLON>
@@ -339,10 +339,10 @@ void struct_declaration(int *maxalign,int *offset,Symbol ***ps)
 
 
 /***********************************************************
- * ¹¦ÄÜ:				½âÎöÉùÃ÷·û
- * type:				Êı¾İÀàĞÍ
- * v(Êä³ö):				µ¥´Ê±àºÅ
- * force_align(Êä³ö):	Ç¿ÖÆ¶ÔÆëÁ£¶È
+ * åŠŸèƒ½:				è§£æå£°æ˜ç¬¦
+ * type:				æ•°æ®ç±»å‹
+ * v(è¾“å‡º):				å•è¯ç¼–å·
+ * force_align(è¾“å‡º):	å¼ºåˆ¶å¯¹é½ç²’åº¦
  *
  * <declarator>::={<pointer>}{<function_calling_convention>}
  *	{<struct_member_alignment>}<direct_declarator>
@@ -364,11 +364,11 @@ void declarator(Type *type, int *v, int *force_align)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöº¯Êıµ÷ÓÃÔ¼¶¨
- * fc(Êä³ö):µ÷ÓÃÔ¼¶¨
+ * åŠŸèƒ½:	è§£æå‡½æ•°è°ƒç”¨çº¦å®š
+ * fc(è¾“å‡º):è°ƒç”¨çº¦å®š
  *
  * <function_calling_convention>::=<KW_CDECL>|<KW_STDCALL>
- * ÓÃÓÚº¯ÊıÉùÃ÷ÉÏ£¬ÓÃÔÚÊı¾İÉùÃ÷ÉÏºöÂÔµô
+ * ç”¨äºå‡½æ•°å£°æ˜ä¸Šï¼Œç”¨åœ¨æ•°æ®å£°æ˜ä¸Šå¿½ç•¥æ‰
  **********************************************************/
 void function_calling_convention (int *fc)
 {
@@ -382,8 +382,8 @@ void function_calling_convention (int *fc)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:				½âÎö½á¹¹³ÉÔ±¶ÔÆë
- * force_align(Êä³ö):	Ç¿ÖÆ¶ÔÆëÁ£¶È
+ * åŠŸèƒ½:				è§£æç»“æ„æˆå‘˜å¯¹é½
+ * force_align(è¾“å‡º):	å¼ºåˆ¶å¯¹é½ç²’åº¦
  *
  * <struct_member_alignment>::=<KW_ALIGN><TK_OPENPA><TK_CINT><TK_CLOSEPA>
  **********************************************************/
@@ -400,7 +400,7 @@ void struct_member_alignment(int *force_align)
 			 align = tkvalue;
 		}
 		else
-			expect("ÕûÊı³£Á¿");
+			expect("æ•´æ•°å¸¸é‡");
 		skip(TK_CLOSEPA);
 		if(align!=1 && align!=2 && align!=4)
 		  align = 1;
@@ -412,10 +412,10 @@ void struct_member_alignment(int *force_align)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:			½âÎöÖ±½ÓÉùÃ÷·û
- * type(ÊäÈë,Êä³ö):	Êı¾İÀàĞÍ
- * v(Êä³ö):			µ¥´Ê±àºÅ	
- * func_call:		º¯Êıµ÷ÓÃÔ¼¶¨
+ * åŠŸèƒ½:			è§£æç›´æ¥å£°æ˜ç¬¦
+ * type(è¾“å…¥,è¾“å‡º):	æ•°æ®ç±»å‹
+ * v(è¾“å‡º):			å•è¯ç¼–å·	
+ * func_call:		å‡½æ•°è°ƒç”¨çº¦å®š
  *
  * <direct_declarator>::=<IDENTIFIER><direct_declarator_postfix>
  **********************************************************/
@@ -428,15 +428,15 @@ void direct_declarator(Type *type,int *v,int func_call)
 	} 
 	else
 	{
-		expect("±êÊ¶·û");
+		expect("æ ‡è¯†ç¬¦");
 	}
 	direct_declarator_postfix(type,func_call);
 }
 
 /***********************************************************
- * ¹¦ÄÜ:			Ö±½ÓÉùÃ÷·ûºó×º
- * type(ÊäÈë,Êä³ö):	Êı¾İÀàĞÍ
- * func_call:		º¯Êıµ÷ÓÃÔ¼¶¨
+ * åŠŸèƒ½:			ç›´æ¥å£°æ˜ç¬¦åç¼€
+ * type(è¾“å…¥,è¾“å‡º):	æ•°æ®ç±»å‹
+ * func_call:		å‡½æ•°è°ƒç”¨çº¦å®š
  *
  * <direct_declarator_ postfix>::= {<TK_OPENBR><TK_CINT><TK_CLOSEBR>
  * 		|<TK_OPENBR><TK_CLOSEBR>
@@ -470,9 +470,9 @@ void direct_declarator_postfix(Type *type,int func_call)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:			½âÎöĞÎ²ÎÀàĞÍ±í
- * type(ÊäÈë,Êä³ö):	Êı¾İÀàĞÍ
- * func_call:		º¯Êıµ÷ÓÃÔ¼¶¨
+ * åŠŸèƒ½:			è§£æå½¢å‚ç±»å‹è¡¨
+ * type(è¾“å…¥,è¾“å‡º):	æ•°æ®ç±»å‹
+ * func_call:		å‡½æ•°è°ƒç”¨çº¦å®š
  *
  * <parameter_type_list>::=<parameter_list>
  *        |<parameter_list><TK_COMMA><TK_ELLIPSIS>
@@ -494,7 +494,7 @@ void parameter_type_list(Type *type,int func_call)
 	{
 		if (!type_specifier(&pt)) 
 		{
-			error("ÎŞĞ§ÀàĞÍ±êÊ¶·û");
+			error("æ— æ•ˆç±»å‹æ ‡è¯†ç¬¦");
 		}
 		declarator(&pt, &n,NULL);
 		s = sym_push(n | SC_PARAMS, &pt, 0, 0);
@@ -512,13 +512,13 @@ void parameter_type_list(Type *type,int func_call)
 	}
 	syntax_state = SNTX_DELAY;
 	skip(TK_CLOSEPA);
-	if(token == TK_BEGIN)			// º¯Êı¶¨Òå
+	if(token == TK_BEGIN)			// å‡½æ•°å®šä¹‰
 		syntax_state = SNTX_LF_HT;
-	else							// º¯ÊıÉùÃ÷
+	else							// å‡½æ•°å£°æ˜
 		syntax_state = SNTX_NUL;
 	syntax_indent();
 	
-	// ´Ë´¦½«º¯Êı·µ»ØÀàĞÍ´æ´¢£¬È»ºóÖ¸Ïò²ÎÊı£¬×îºó½«typeÉèÎªº¯ÊıÀàĞÍ£¬ÒıÓÃµÄÏà¹ØĞÅÏ¢·ÅÔÚrefÖĞ
+	// æ­¤å¤„å°†å‡½æ•°è¿”å›ç±»å‹å­˜å‚¨ï¼Œç„¶åæŒ‡å‘å‚æ•°ï¼Œæœ€åå°†typeè®¾ä¸ºå‡½æ•°ç±»å‹ï¼Œå¼•ç”¨çš„ç›¸å…³ä¿¡æ¯æ”¾åœ¨refä¸­
 	s = sym_push(SC_ANOM, type, func_call, 0);
 	s->next = first;
 	type->t = T_FUNC;
@@ -526,8 +526,8 @@ void parameter_type_list(Type *type,int func_call)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöº¯ÊıÌå
- * sym:		º¯Êı·ûºÅ
+ * åŠŸèƒ½:	è§£æå‡½æ•°ä½“
+ * sym:		å‡½æ•°ç¬¦å·
  *
  * <funcbody>::=<compound_statement>
  **********************************************************/
@@ -535,7 +535,7 @@ void funcbody(Symbol *sym)
 {
 	ind = sec_text->data_offset;
     coffsym_add_update(sym, ind, sec_text->index,CST_FUNC,IMAGE_SYM_CLASS_EXTERNAL);
-	/* ·ÅÒ»ÄäÃû·ûºÅÔÚ¾Ö²¿·ûºÅ±íÖĞ */
+	/* æ”¾ä¸€åŒ¿åç¬¦å·åœ¨å±€éƒ¨ç¬¦å·è¡¨ä¸­ */
     sym_direct_push(&local_sym_stack, SC_ANOM, &int_type, 0);
 	gen_prolog(&sym->type);
     rsym = 0;
@@ -543,12 +543,12 @@ void funcbody(Symbol *sym)
 	backpatch(rsym,ind);
 	gen_epilog();
 	sec_text->data_offset = ind;
-	sym_pop(&local_sym_stack, NULL); /* Çå¿Õ¾Ö²¿·ûºÅÕ»*/
+	sym_pop(&local_sym_stack, NULL); /* æ¸…ç©ºå±€éƒ¨ç¬¦å·æ ˆ*/
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	ÅĞ¶ÏÊÇ·ñÎªÀàĞÍÇø·Ö·û
- * v:		µ¥´Ê±àºÅ
+ * åŠŸèƒ½:	åˆ¤æ–­æ˜¯å¦ä¸ºç±»å‹åŒºåˆ†ç¬¦
+ * v:		å•è¯ç¼–å·
  **********************************************************/
 int is_type_specifier(int v)
 {
@@ -567,9 +567,9 @@ int is_type_specifier(int v)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöÓï¾ä
- * bsym:	breakÌø×ªÎ»ÖÃ
- * csym:	continueÌø×ªÎ»ÖÃ
+ * åŠŸèƒ½:	è§£æè¯­å¥
+ * bsym:	breakè·³è½¬ä½ç½®
+ * csym:	continueè·³è½¬ä½ç½®
  *
  * <statement >::=<compound_statement> 
  *		|<if_statement> 
@@ -608,9 +608,9 @@ void statement(int *bsym, int *csym)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö¸´ºÏÓï¾ä
- * bsym:	breakÌø×ªÎ»ÖÃ
- * csym:	continueÌø×ªÎ»ÖÃ
+ * åŠŸèƒ½:	è§£æå¤åˆè¯­å¥
+ * bsym:	breakè·³è½¬ä½ç½®
+ * csym:	continueè·³è½¬ä½ç½®
  * 
  * <compound_statement>::=<TK_BEGIN>{<declaration>}{<statement>}<TK_END>
  **********************************************************/
@@ -619,7 +619,7 @@ void compound_statement(int *bsym, int *csym)
 	Symbol *s;
 	s = (Symbol*)stack_get_top(&local_sym_stack);
 	syntax_state = SNTX_LF_HT;
-	syntax_level++;						// ¸´ºÏÓï¾ä£¬Ëõ½øÔö¼ÓÒ»¼¶
+	syntax_level++;						// å¤åˆè¯­å¥ï¼Œç¼©è¿›å¢åŠ ä¸€çº§
 	
 	get_token();
 	while(is_type_specifier(token))
@@ -636,9 +636,9 @@ void compound_statement(int *bsym, int *csym)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöifÓï¾ä
- * bsym:	breakÌø×ªÎ»ÖÃ
- * csym:	continueÌø×ªÎ»ÖÃ
+ * åŠŸèƒ½:	è§£æifè¯­å¥
+ * bsym:	breakè·³è½¬ä½ç½®
+ * csym:	continueè·³è½¬ä½ç½®
  *
  * <if_statement>::=<KW_IF><TK_OPENPA><expression>
  *	<TK_CLOSEPA><statement>[<KW_ELSE><statement>]
@@ -661,16 +661,16 @@ void if_statement(int *bsym, int *csym)
 		b = gen_jmpforward(0);
 		backpatch(a,ind);
 		statement(bsym, csym);
-		backpatch(b,ind); /* ·´ÌîelseÌø×ª */
+		backpatch(b,ind); /* åå¡«elseè·³è½¬ */
 	}
 	else
 		backpatch(a,ind);
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöforÓï¾ä
- * bsym:	breakÌø×ªÎ»ÖÃ
- * csym:	continueÌø×ªÎ»ÖÃ
+ * åŠŸèƒ½:	è§£æforè¯­å¥
+ * bsym:	breakè·³è½¬ä½ç½®
+ * csym:	continueè·³è½¬ä½ç½®
  * 
  * <for_statement>::=<KW_FOR><TK_OPENPA><expression_statement>
  *	<expression_statement><expression><TK_CLOSEPA><statement>
@@ -707,22 +707,22 @@ void for_statement(int *bsym, int *csym)
 	}
 	syntax_state = SNTX_LF_HT;
 	skip(TK_CLOSEPA);
-	statement(&a, &b);//Ö»ÓĞ´Ë´¦ÓÃµ½break,¼°continue,Ò»¸öÑ­»·ÖĞ¿ÉÄÜÓĞ¶à¸öbreak,»ò¶à¸öcontinue,¹ÊĞèÒªÀ­Á´ÒÔ±¸·´Ìî
+	statement(&a, &b);//åªæœ‰æ­¤å¤„ç”¨åˆ°break,åŠcontinue,ä¸€ä¸ªå¾ªç¯ä¸­å¯èƒ½æœ‰å¤šä¸ªbreak,æˆ–å¤šä¸ªcontinue,æ•…éœ€è¦æ‹‰é“¾ä»¥å¤‡åå¡«
 	gen_jmpbackword(c);
 	backpatch(a,ind);
 	backpatch(b, c);
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöcontinueÓï¾ä
- * csym:	continueÌø×ªÎ»ÖÃ
+ * åŠŸèƒ½:	è§£æcontinueè¯­å¥
+ * csym:	continueè·³è½¬ä½ç½®
  * 
  * <continue_statement>::=<KW_CONTINUE><TK_SEMICOLON>
  **********************************************************/
 void continue_statement(int *csym)
 {
 	if (!csym)
-		error("´Ë´¦²»ÄÜÓÃcontinue");
+		error("æ­¤å¤„ä¸èƒ½ç”¨continue");
 	*csym = gen_jmpforward(*csym);
 	get_token();
 	syntax_state = SNTX_LF_HT;
@@ -730,22 +730,22 @@ void continue_statement(int *csym)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöbreakÓï¾ä
- * bsym:	breakÌø×ªÎ»ÖÃ
+ * åŠŸèƒ½:	è§£æbreakè¯­å¥
+ * bsym:	breakè·³è½¬ä½ç½®
  * 
  * <break_statement>::=<KW_BREAK><TK_SEMICOLON>
  **********************************************************/
 void break_statement(int *bsym)
 {
 	if (!bsym)
-		error("´Ë´¦²»ÄÜÓÃbreak");
+		error("æ­¤å¤„ä¸èƒ½ç”¨break");
 	*bsym = gen_jmpforward(*bsym);
 	get_token();
 	syntax_state = SNTX_LF_HT;
 	skip(TK_SEMICOLON);	
 }
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöreturnÓï¾ä
+ * åŠŸèƒ½:	è§£æreturnè¯­å¥
  *  
  * <return_statement>::=<KW_RETURN><TK_SEMICOLON>
  *			|<KW_RETURN><expression><TK_SEMICOLON>
@@ -754,9 +754,9 @@ void return_statement()
 {
 	syntax_state = SNTX_DELAY;
 	get_token();
-	if(token == TK_SEMICOLON)	// ÊÊÓÃÓÚ return;
+	if(token == TK_SEMICOLON)	// é€‚ç”¨äº return;
 		syntax_state = SNTX_NUL;
-	else						// ÊÊÓÃÓÚ return <expression>;
+	else						// é€‚ç”¨äº return <expression>;
 		syntax_state = SNTX_SP;
 	syntax_indent();
 	
@@ -772,7 +772,7 @@ void return_statement()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö±í´ïÊ½Óï¾ä
+ * åŠŸèƒ½:	è§£æè¡¨è¾¾å¼è¯­å¥
  *  
  * <expression_statement>::= <TK_SEMICOLON>|<expression><TK_SEMICOLON> 
  **********************************************************/
@@ -788,7 +788,7 @@ void expression_statement()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö±í´ïÊ½
+ * åŠŸèƒ½:	è§£æè¡¨è¾¾å¼
  * 
  * <expression>::=<assignment_expression>{<TK_COMMA><assignment_expression>}
  **********************************************************/
@@ -806,12 +806,12 @@ void expression()
 
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö¸³Öµ±í´ïÊ½
+ * åŠŸèƒ½:	è§£æèµ‹å€¼è¡¨è¾¾å¼
  *
  * <assignment_expression>::= <equality_expression>
  *		|<unary_expression><TK_ASSIGN> <equality_expression> 
  **********************************************************/
-//ÕâÀïÓĞ×óµİ¹é£¬¿ÉÒÔÌáÈ¡¹«Òò×Ó
+//è¿™é‡Œæœ‰å·¦é€’å½’ï¼Œå¯ä»¥æå–å…¬å› å­
 void assignment_expression()
 {
     equality_expression();
@@ -825,7 +825,7 @@ void assignment_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöÏàµÈÀà±í´ïÊ½
+ * åŠŸèƒ½:	è§£æç›¸ç­‰ç±»è¡¨è¾¾å¼
  *
  * < equality_expression >::=<relational_expression>
  *		{<TK_EQ> <relational_expression>
@@ -846,7 +846,7 @@ void equality_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö¹ØÏµ±í´ïÊ½
+ * åŠŸèƒ½:	è§£æå…³ç³»è¡¨è¾¾å¼
  *
  * <relational_expression>::=<additive_expression>{
  *		<TK_LT><additive_expression> 
@@ -869,7 +869,7 @@ void relational_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö¼Ó¼õÀà±í´ïÊ½
+ * åŠŸèƒ½:	è§£æåŠ å‡ç±»è¡¨è¾¾å¼
  *
  * <additive_expression>::=< multiplicative_expression> 
  *		{<TK_PLUS> <multiplicative_expression>
@@ -889,7 +889,7 @@ void additive_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö³Ë³ıÀà±í´ïÊ½
+ * åŠŸèƒ½:	è§£æä¹˜é™¤ç±»è¡¨è¾¾å¼
  *
  * <multiplicative_expression>::=<unary_expression>
  *		{<TK_STAR>  < unary_expression >
@@ -910,7 +910,7 @@ void multiplicative_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöÒ»Ôª±í´ïÊ½
+ * åŠŸèƒ½:	è§£æä¸€å…ƒè¡¨è¾¾å¼
  *
  * <unary_expression>::= <postfix_expression> 
  *			|<TK_AND><unary_expression> 
@@ -957,7 +957,7 @@ void unary_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎösizeof±í´ïÊ½
+ * åŠŸèƒ½:	è§£æsizeofè¡¨è¾¾å¼
  *
  * <sizeof_expression>::= 
  *		<KW_SIZEOF><TK_OPENPA><type_specifier><TK_ CLOSEPA>
@@ -974,12 +974,12 @@ void sizeof_expression()
 
 	size = type_size(&type, &align);
 	if (size < 0)
-		error("sizeof¼ÆËãÀàĞÍ³ß´çÊ§°Ü");
+		error("sizeofè®¡ç®—ç±»å‹å°ºå¯¸å¤±è´¥");
 	operand_push(&int_type, SC_GLOBAL, size);	
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöºó×º±í´ïÊ½
+ * åŠŸèƒ½:	è§£æåç¼€è¡¨è¾¾å¼
  *
  * <postfix_expression>::=  <primary_expression> 
  *		{<TK_OPENBR><expression> <TK_CLOSEBR> 
@@ -1001,7 +1001,7 @@ void postfix_expression()
             cancel_lvalue();
             get_token();
             if ((optop->type.t & T_BTYPE) != T_STRUCT)
-                expect("½á¹¹Ìå±äÁ¿");
+                expect("ç»“æ„ä½“å˜é‡");
             s = optop->type.ref;
             token |= SC_MEMBER;
             while ((s = s->next) != NULL) 
@@ -1010,14 +1010,14 @@ void postfix_expression()
                     break;
             }
             if (!s)
-                error("Ã»ÓĞ´Ë³ÉÔ±±äÁ¿: %s",  get_tkstr(token & ~SC_MEMBER));
-            /* ³ÉÔ±±äÁ¿µØÖ· = ½á¹¹±äÁ¿Ö¸Õë + ³ÉÔ±±äÁ¿Æ«ÒÆ */
-            optop->type = char_pointer_type; /* ³ÉÔ±±äÁ¿µÄÆ«ÒÆÊÇÖ¸Ïà¶ÔÓÚ½á¹¹ÌåÊ×µØÖ·µÄ×Ö½ÚÆ«ÒÆ£¬Òò´Ë´Ë´¦±ä»»ÀàĞÍÎª×Ö½Ú±äÁ¿Ö¸Õë */
+                error("æ²¡æœ‰æ­¤æˆå‘˜å˜é‡: %s",  get_tkstr(token & ~SC_MEMBER));
+            /* æˆå‘˜å˜é‡åœ°å€ = ç»“æ„å˜é‡æŒ‡é’ˆ + æˆå‘˜å˜é‡åç§» */
+            optop->type = char_pointer_type; /* æˆå‘˜å˜é‡çš„åç§»æ˜¯æŒ‡ç›¸å¯¹äºç»“æ„ä½“é¦–åœ°å€çš„å­—èŠ‚åç§»ï¼Œå› æ­¤æ­¤å¤„å˜æ¢ç±»å‹ä¸ºå­—èŠ‚å˜é‡æŒ‡é’ˆ */
             operand_push(&int_type, SC_GLOBAL, s->c);
-            gen_op(TK_PLUS);  //Ö´ĞĞºóoptop->value¼ÇÒäÁË³ÉÔ±µØÖ·
-            /* ±ä»»ÀàĞÍÎª³ÉÔ±±äÁ¿Êı¾İÀàĞÍ */
+            gen_op(TK_PLUS);  //æ‰§è¡Œåoptop->valueè®°å¿†äº†æˆå‘˜åœ°å€
+            /* å˜æ¢ç±»å‹ä¸ºæˆå‘˜å˜é‡æ•°æ®ç±»å‹ */
             optop->type = s->type;
-            /* Êı×é±äÁ¿²»ÄÜ³äµ±×óÖµ */
+            /* æ•°ç»„å˜é‡ä¸èƒ½å……å½“å·¦å€¼ */
             if (!(optop->type.t & T_ARRAY)) 
 			{
                 optop->r |= SC_LVAL;
@@ -1043,7 +1043,7 @@ void postfix_expression()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö³õµÈ±í´ïÊ½
+ * åŠŸèƒ½:	è§£æåˆç­‰è¡¨è¾¾å¼
  *
  * <primary_expression>::=<IDENTIFIER>
  *		|<TK_CINT>
@@ -1082,30 +1082,30 @@ void primary_expression()
 		 t = token;		
 		 get_token();
 		 if(t < TK_IDENT)
-			expect("±êÊ¶·û»ò³£Á¿");
+			expect("æ ‡è¯†ç¬¦æˆ–å¸¸é‡");
 		 s = sym_search(t);
 		 if (!s) 
 		 { 
 			 if (token != TK_OPENPA)
-				 error("'%s'Î´ÉùÃ÷\n", get_tkstr(t));
+				 error("'%s'æœªå£°æ˜\n", get_tkstr(t));
 			
-			 s = func_sym_push(t, &default_func_type);//ÔÊĞíº¯Êı²»ÉùÃ÷£¬Ö±½ÓÒıÓÃ
+			 s = func_sym_push(t, &default_func_type);//å…è®¸å‡½æ•°ä¸å£°æ˜ï¼Œç›´æ¥å¼•ç”¨
 			 s->r = SC_GLOBAL | SC_SYM;
 		 }
 		r = s->r;
 		operand_push(&s->type, r, s->c);
-        /* ·ûºÅÒıÓÃ£¬²Ù×÷Êı±ØĞë¼ÇÂ¼·ûºÅµØÖ· */		
+        /* ç¬¦å·å¼•ç”¨ï¼Œæ“ä½œæ•°å¿…é¡»è®°å½•ç¬¦å·åœ°å€ */		
         if (optop->r & SC_SYM) 
 		{   
 			optop->sym = s;      
-            optop->value = 0;  //ÓÃÓÚº¯Êıµ÷ÓÃ£¬¼°È«¾Ö±äÁ¿ÒıÓÃ printf("g_cc=%c\n",g_cc);
+            optop->value = 0;  //ç”¨äºå‡½æ•°è°ƒç”¨ï¼ŒåŠå…¨å±€å˜é‡å¼•ç”¨ printf("g_cc=%c\n",g_cc);
         }
 		break;
 	}
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎöÊµ²Î±í´ïÊ½±í
+ * åŠŸèƒ½:	è§£æå®å‚è¡¨è¾¾å¼è¡¨
  *
  * <argument_expression_list >::=<assignment_expression>
  *		{<TK_COMMA> <assignment_expression>}
@@ -1136,7 +1136,7 @@ void argument_expression_list()
 		}
 	}   
 	if (sa)
-		error("Êµ²Î¸öÊıÉÙÓÚº¯ÊıĞÎ²Î¸öÊı"); //½²Ò»ÏÂĞÎ²Î£¬Êµ²Î
+		error("å®å‚ä¸ªæ•°å°‘äºå‡½æ•°å½¢å‚ä¸ªæ•°"); //è®²ä¸€ä¸‹å½¢å‚ï¼Œå®å‚
 	skip(TK_CLOSEPA);
 	gen_invoke(nb_args);
 
@@ -1144,8 +1144,8 @@ void argument_expression_list()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	Ëõ½øn¸ötab¼ü
- * n:		Ëõ½ø¸öÊı
+ * åŠŸèƒ½:	ç¼©è¿›nä¸ªtabé”®
+ * n:		ç¼©è¿›ä¸ªæ•°
  **********************************************************/
 void print_tab(int n)
 {
@@ -1155,10 +1155,10 @@ void print_tab(int n)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	Óï·¨Ëõ½ø
- * Í¨³£Çé¿öÔÚget_token×îºóµ÷ÓÃ£¬
- * Èç¹û±ØĞë¸ù¾İĞÂÈ¡µ¥´ÊÀàĞÍÅĞ¶ÏÊä³ö¸ñÊ½£¬ÔòÔÚÈ¡¸Ãµ¥´ÊÇ°ÉèÖÃsyntax_state = SNTX_DELAY£¬Ôİ²»Êä³ö£¬
- * ´ıÈ¡³öĞÂµ¥´Êºó£¬¸ù¾İµ¥´ÊÀàĞÍÉèÖÃsyntax_state£¬ÖØĞÂµ÷ÓÃ¸Ãº¯Êı¸ù¾İsyntax_state£¬½øĞĞÊÊµ±Êä³ö
+ * åŠŸèƒ½:	è¯­æ³•ç¼©è¿›
+ * é€šå¸¸æƒ…å†µåœ¨get_tokenæœ€åè°ƒç”¨ï¼Œ
+ * å¦‚æœå¿…é¡»æ ¹æ®æ–°å–å•è¯ç±»å‹åˆ¤æ–­è¾“å‡ºæ ¼å¼ï¼Œåˆ™åœ¨å–è¯¥å•è¯å‰è®¾ç½®syntax_state = SNTX_DELAYï¼Œæš‚ä¸è¾“å‡ºï¼Œ
+ * å¾…å–å‡ºæ–°å•è¯åï¼Œæ ¹æ®å•è¯ç±»å‹è®¾ç½®syntax_stateï¼Œé‡æ–°è°ƒç”¨è¯¥å‡½æ•°æ ¹æ®syntax_stateï¼Œè¿›è¡Œé€‚å½“è¾“å‡º
  **********************************************************/
 void syntax_indent()
 {
@@ -1173,7 +1173,7 @@ void syntax_indent()
 			break;	
 		case SNTX_LF_HT:
 			{	
-				if(token == TK_END)		// Óöµ½'}',Ëõ½ø¼õÉÙÒ»¼¶
+				if(token == TK_END)		// é‡åˆ°'}',ç¼©è¿›å‡å°‘ä¸€çº§
 				syntax_level--;
 				printf("\n");
 				print_tab(syntax_level);				

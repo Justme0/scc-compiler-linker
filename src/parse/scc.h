@@ -1,15 +1,15 @@
-// ¡¶×Ô¼º¶¯ÊÖĞ´±àÒëÆ÷¡¢Á´½ÓÆ÷¡·ÅäÌ×Ô´´úÂë
+// ã€Šè‡ªå·±åŠ¨æ‰‹å†™ç¼–è¯‘å™¨ã€é“¾æ¥å™¨ã€‹é…å¥—æºä»£ç 
 
 #include <stdio.h>
 #include <windows.h>
 
 /*******************************dynstring.h begin****************************/
-/*¶¯Ì¬×Ö·û´®¶¨Òå*/
+/*åŠ¨æ€å­—ç¬¦ä¸²å®šä¹‰*/
 typedef struct DynString 
 {
-    int count;		// ×Ö·û´®³¤¶È  
-	int capacity;	// °üº¬¸Ã×Ö·û´®µÄ»º³åÇø³¤¶È
-    char *data;		// Ö¸Ïò×Ö·û´®µÄÖ¸Õë
+    int count;		// å­—ç¬¦ä¸²é•¿åº¦  
+	int capacity;	// åŒ…å«è¯¥å­—ç¬¦ä¸²çš„ç¼“å†²åŒºé•¿åº¦
+    char *data;		// æŒ‡å‘å­—ç¬¦ä¸²çš„æŒ‡é’ˆ
 } DynString;
 
 void dynstring_realloc(DynString *cstr, int new_size);
@@ -18,12 +18,12 @@ void dynstring_reset(DynString *cstr);
 /*******************************dynstring.h begin****************************/
 
 /*******************************dynarray.h begin****************************/
-/*¶¯Ì¬Êı×é¶¨Òå*/
+/*åŠ¨æ€æ•°ç»„å®šä¹‰*/
 typedef struct DynArray 
 {
-    int count;			// ¶¯Ì¬Êı×éÔªËØ¸öÊı
-    int capacity;		// ¶¯Ì¬Êı×é»º³åÇø³¤¶È¶È
-    void **data;		// Ö¸ÏòÊı¾İÖ¸ÕëÊı×é
+    int count;			// åŠ¨æ€æ•°ç»„å…ƒç´ ä¸ªæ•°
+    int capacity;		// åŠ¨æ€æ•°ç»„ç¼“å†²åŒºé•¿åº¦åº¦
+    void **data;		// æŒ‡å‘æ•°æ®æŒ‡é’ˆæ•°ç»„
 } DynArray;
 
 void dynarray_add(DynArray *parr, void *data);
@@ -33,85 +33,85 @@ int dynarray_search(DynArray *parr, int key);
 /*******************************dynarray.h begin****************************/
 
 /********************************lex.h begin*****************************/
-/* µ¥´Ê±àÂë */
+/* å•è¯ç¼–ç  */
 enum e_TokenCode
 {  
-	/* ÔËËã·û¼°·Ö¸ô·û */
-	TK_PLUS,		// + ¼ÓºÅ
-    TK_MINUS,		// - ¼õºÅ
-    TK_STAR,		// * ĞÇºÅ
-    TK_DIVIDE,		// / ³ıºÅ
-    TK_MOD,			// % ÇóÓàÔËËã·û
-    TK_EQ,			// == µÈÓÚºÅ
-    TK_NEQ,			// != ²»µÈÓÚºÅ
-    TK_LT,			// < Ğ¡ÓÚºÅ
-    TK_LEQ,			// <= Ğ¡ÓÚµÈÓÚºÅ
-    TK_GT,			// > ´óÓÚºÅ
-    TK_GEQ,			// >= ´óÓÚµÈÓÚºÅ
-    TK_ASSIGN,		// = ¸³ÖµÔËËã·û 
-    TK_POINTSTO,	// -> Ö¸Ïò½á¹¹Ìå³ÉÔ±ÔËËã·û
-    TK_DOT,			// . ½á¹¹Ìå³ÉÔ±ÔËËã·û
-	TK_AND,         // & µØÖ·ÓëÔËËã·û
-	TK_OPENPA,		// ( ×óÔ²À¨ºÅ
-	TK_CLOSEPA,		// ) ÓÒÔ²À¨ºÅ
-	TK_OPENBR,		// [ ×óÖĞÀ¨ºÅ
-	TK_CLOSEBR,		// ] ÓÒÔ²À¨ºÅ
-	TK_BEGIN,		// { ×ó´óÀ¨ºÅ
-	TK_END,			// } ÓÒ´óÀ¨ºÅ
-    TK_SEMICOLON,	// ; ·ÖºÅ    
-    TK_COMMA,		// , ¶ººÅ
-	TK_ELLIPSIS,	// ... Ê¡ÂÔºÅ
-	TK_EOF,			// ÎÄ¼ş½áÊø·û
+	/* è¿ç®—ç¬¦åŠåˆ†éš”ç¬¦ */
+	TK_PLUS,		// + åŠ å·
+    TK_MINUS,		// - å‡å·
+    TK_STAR,		// * æ˜Ÿå·
+    TK_DIVIDE,		// / é™¤å·
+    TK_MOD,			// % æ±‚ä½™è¿ç®—ç¬¦
+    TK_EQ,			// == ç­‰äºå·
+    TK_NEQ,			// != ä¸ç­‰äºå·
+    TK_LT,			// < å°äºå·
+    TK_LEQ,			// <= å°äºç­‰äºå·
+    TK_GT,			// > å¤§äºå·
+    TK_GEQ,			// >= å¤§äºç­‰äºå·
+    TK_ASSIGN,		// = èµ‹å€¼è¿ç®—ç¬¦ 
+    TK_POINTSTO,	// -> æŒ‡å‘ç»“æ„ä½“æˆå‘˜è¿ç®—ç¬¦
+    TK_DOT,			// . ç»“æ„ä½“æˆå‘˜è¿ç®—ç¬¦
+	TK_AND,         // & åœ°å€ä¸è¿ç®—ç¬¦
+	TK_OPENPA,		// ( å·¦åœ†æ‹¬å·
+	TK_CLOSEPA,		// ) å³åœ†æ‹¬å·
+	TK_OPENBR,		// [ å·¦ä¸­æ‹¬å·
+	TK_CLOSEBR,		// ] å³åœ†æ‹¬å·
+	TK_BEGIN,		// { å·¦å¤§æ‹¬å·
+	TK_END,			// } å³å¤§æ‹¬å·
+    TK_SEMICOLON,	// ; åˆ†å·    
+    TK_COMMA,		// , é€—å·
+	TK_ELLIPSIS,	// ... çœç•¥å·
+	TK_EOF,			// æ–‡ä»¶ç»“æŸç¬¦
 
-    /* ³£Á¿ */
-    TK_CINT,		// ÕûĞÍ³£Á¿
-    TK_CCHAR,		// ×Ö·û³£Á¿
-    TK_CSTR,		// ×Ö·û´®³£Á¿
+    /* å¸¸é‡ */
+    TK_CINT,		// æ•´å‹å¸¸é‡
+    TK_CCHAR,		// å­—ç¬¦å¸¸é‡
+    TK_CSTR,		// å­—ç¬¦ä¸²å¸¸é‡
 
-	/* ¹Ø¼ü×Ö */
-	KW_CHAR,		// char¹Ø¼ü×Ö
-	KW_SHORT,		// short¹Ø¼ü×Ö
-	KW_INT,			// int¹Ø¼ü×Ö
-    KW_VOID,		// void¹Ø¼ü×Ö  
-    KW_STRUCT,		// struct¹Ø¼ü×Ö   
-	KW_IF,			// if¹Ø¼ü×Ö
-	KW_ELSE,		// else¹Ø¼ü×Ö
-	KW_FOR,			// for¹Ø¼ü×Ö
-	KW_CONTINUE,	// continue¹Ø¼ü×Ö
-    KW_BREAK,		// break¹Ø¼ü×Ö   
-    KW_RETURN,		// return¹Ø¼ü×Ö
-    KW_SIZEOF,		// sizeof¹Ø¼ü×Ö
+	/* å…³é”®å­— */
+	KW_CHAR,		// charå…³é”®å­—
+	KW_SHORT,		// shortå…³é”®å­—
+	KW_INT,			// intå…³é”®å­—
+    KW_VOID,		// voidå…³é”®å­—  
+    KW_STRUCT,		// structå…³é”®å­—   
+	KW_IF,			// ifå…³é”®å­—
+	KW_ELSE,		// elseå…³é”®å­—
+	KW_FOR,			// forå…³é”®å­—
+	KW_CONTINUE,	// continueå…³é”®å­—
+    KW_BREAK,		// breakå…³é”®å­—   
+    KW_RETURN,		// returnå…³é”®å­—
+    KW_SIZEOF,		// sizeofå…³é”®å­—
 
-    KW_ALIGN,		// __align¹Ø¼ü×Ö	
-    KW_CDECL,		// __cdecl¹Ø¼ü×Ö standard c call
-	KW_STDCALL,     // __stdcall¹Ø¼ü×Ö pascal c call
+    KW_ALIGN,		// __alignå…³é”®å­—	
+    KW_CDECL,		// __cdeclå…³é”®å­— standard c call
+	KW_STDCALL,     // __stdcallå…³é”®å­— pascal c call
 	
-	/* ±êÊ¶·û */
+	/* æ ‡è¯†ç¬¦ */
 	TK_IDENT
 };
 
-/* ´Ê·¨×´Ì¬ */
+/* è¯æ³•çŠ¶æ€ */
 enum e_LexState
 {
 	LEX_NORMAL,
 	LEX_SEP
 };
 
-/* µ¥´Ê´æ´¢½á¹¹¶¨Òå */
+/* å•è¯å­˜å‚¨ç»“æ„å®šä¹‰ */
 typedef struct TkWord
 {
-    int  tkcode;					// µ¥´Ê±àÂë 
-    struct TkWord *next;			// Ö¸Ïò¹şÏ£³åÍ»µÄÆäËüµ¥´Ê
-    char *spelling;					// µ¥´Ê×Ö·û´®
-    struct Symbol *sym_struct;		// Ö¸Ïòµ¥´ÊËù±íÊ¾µÄ½á¹¹¶¨Òå
-    struct Symbol *sym_identifier;	// Ö¸Ïòµ¥´ÊËù±íÊ¾µÄ±êÊ¶·û
+    int  tkcode;					// å•è¯ç¼–ç  
+    struct TkWord *next;			// æŒ‡å‘å“ˆå¸Œå†²çªçš„å…¶å®ƒå•è¯
+    char *spelling;					// å•è¯å­—ç¬¦ä¸²
+    struct Symbol *sym_struct;		// æŒ‡å‘å•è¯æ‰€è¡¨ç¤ºçš„ç»“æ„å®šä¹‰
+    struct Symbol *sym_identifier;	// æŒ‡å‘å•è¯æ‰€è¡¨ç¤ºçš„æ ‡è¯†ç¬¦
 } TkWord;
 
-#define MAXKEY	1024				// ¹şÏ£±íÈİÁ¿
+#define MAXKEY	1024				// å“ˆå¸Œè¡¨å®¹é‡
 
-extern TkWord* tk_hashtable[MAXKEY];// µ¥´Ê¹şÏ£±í
-extern DynArray tktable;			// µ¥´Ê¶¯Ì¬Êı×é
-#define CH_EOF   (-1)				// ÎÄ¼şÎ²±êÊ¶
+extern TkWord* tk_hashtable[MAXKEY];// å•è¯å“ˆå¸Œè¡¨
+extern DynArray tktable;			// å•è¯åŠ¨æ€æ•°ç»„
+#define CH_EOF   (-1)				// æ–‡ä»¶å°¾æ ‡è¯†
 
 TkWord* tkword_direct_insert(TkWord* tp);
 TkWord* tkword_insert(char * p);
@@ -130,14 +130,14 @@ void color_token(int lex_state);
 
 
 /*****************************error.h begin***********************************/
-/* ´íÎó¼¶±ğ */
+/* é”™è¯¯çº§åˆ« */
 enum e_ErrorLevel
 {
 	LEVEL_WARNING,
 	LEVEL_ERROR,
 };
 
-/* ¹¤×÷½×¶Î */
+/* å·¥ä½œé˜¶æ®µ */
 enum e_WorkStage
 {
 	STAGE_COMPILE,
@@ -152,48 +152,48 @@ void link_error(char *fmt, ...);
 
 
 /*******************************grammar.h begin****************************/
-/* Óï·¨×´Ì¬ */
+/* è¯­æ³•çŠ¶æ€ */
 enum e_SynTaxState
 {
-	SNTX_NUL,       // ¿Õ×´Ì¬£¬Ã»ÓĞÓï·¨Ëõ½ø¶¯×÷
-	SNTX_SP,		// ¿Õ¸ñ int a; int __stdcall MessageBoxA(); return 1;
-	SNTX_LF_HT,		// »»ĞĞ²¢Ëõ½ø£¬Ã¿Ò»¸öÉùÃ÷¡¢º¯Êı¶¨Òå¡¢Óï¾ä½áÊø¶¼ÒªÖÃÎª´Ë×´Ì¬
-	SNTX_DELAY      // ÑÓ³ÙÈ¡³öÏÂÒ»µ¥´ÊºóÈ·¶¨Êä³ö¸ñÊ½£¬È¡³öÏÂÒ»¸öµ¥´Êºó£¬¸ù¾İµ¥´ÊÀàĞÍµ¥¶Àµ÷ÓÃsyntax_indentÈ·¶¨¸ñÊ½½øĞĞÊä³ö 
+	SNTX_NUL,       // ç©ºçŠ¶æ€ï¼Œæ²¡æœ‰è¯­æ³•ç¼©è¿›åŠ¨ä½œ
+	SNTX_SP,		// ç©ºæ ¼ int a; int __stdcall MessageBoxA(); return 1;
+	SNTX_LF_HT,		// æ¢è¡Œå¹¶ç¼©è¿›ï¼Œæ¯ä¸€ä¸ªå£°æ˜ã€å‡½æ•°å®šä¹‰ã€è¯­å¥ç»“æŸéƒ½è¦ç½®ä¸ºæ­¤çŠ¶æ€
+	SNTX_DELAY      // å»¶è¿Ÿå–å‡ºä¸‹ä¸€å•è¯åç¡®å®šè¾“å‡ºæ ¼å¼ï¼Œå–å‡ºä¸‹ä¸€ä¸ªå•è¯åï¼Œæ ¹æ®å•è¯ç±»å‹å•ç‹¬è°ƒç”¨syntax_indentç¡®å®šæ ¼å¼è¿›è¡Œè¾“å‡º 
 };
 
-/* ´æ´¢ÀàĞÍ */
+/* å­˜å‚¨ç±»å‹ */
 enum e_StorageClass
 {
-	SC_GLOBAL =   0x00f0,		// °üÀ¨£º°üÀ¨ÕûĞÍ³£Á¿£¬×Ö·û³£Á¿¡¢×Ö·û´®³£Á¿,È«¾Ö±äÁ¿,º¯Êı¶¨Òå          
-	SC_LOCAL  =   0x00f1,		// Õ»ÖĞ±äÁ¿
-	SC_LLOCAL =   0x00f2,       // ¼Ä´æÆ÷Òç³ö´æ·ÅÕ»ÖĞ
-	SC_CMP    =   0x00f3,       // Ê¹ÓÃ±êÖ¾¼Ä´æÆ÷
-	SC_VALMASK=   0x00ff,       // ´æ´¢ÀàĞÍÑÚÂë             
-	SC_LVAL   =   0x0100,       // ×óÖµ       
-	SC_SYM    =   0x0200,       // ·ûºÅ	
+	SC_GLOBAL =   0x00f0,		// åŒ…æ‹¬ï¼šåŒ…æ‹¬æ•´å‹å¸¸é‡ï¼Œå­—ç¬¦å¸¸é‡ã€å­—ç¬¦ä¸²å¸¸é‡,å…¨å±€å˜é‡,å‡½æ•°å®šä¹‰          
+	SC_LOCAL  =   0x00f1,		// æ ˆä¸­å˜é‡
+	SC_LLOCAL =   0x00f2,       // å¯„å­˜å™¨æº¢å‡ºå­˜æ”¾æ ˆä¸­
+	SC_CMP    =   0x00f3,       // ä½¿ç”¨æ ‡å¿—å¯„å­˜å™¨
+	SC_VALMASK=   0x00ff,       // å­˜å‚¨ç±»å‹æ©ç              
+	SC_LVAL   =   0x0100,       // å·¦å€¼       
+	SC_SYM    =   0x0200,       // ç¬¦å·	
 
-	SC_ANOM	  = 0x10000000,     // ÄäÃû·ûºÅ
-	SC_STRUCT = 0x20000000,     // ½á¹¹Ìå·ûºÅ
-	SC_MEMBER = 0x40000000,     // ½á¹¹³ÉÔ±±äÁ¿
-	SC_PARAMS = 0x80000000,     // º¯Êı²ÎÊı
+	SC_ANOM	  = 0x10000000,     // åŒ¿åç¬¦å·
+	SC_STRUCT = 0x20000000,     // ç»“æ„ä½“ç¬¦å·
+	SC_MEMBER = 0x40000000,     // ç»“æ„æˆå‘˜å˜é‡
+	SC_PARAMS = 0x80000000,     // å‡½æ•°å‚æ•°
 };
 
-/* ÀàĞÍ±àÂë */
+/* ç±»å‹ç¼–ç  */
 enum e_TypeCode
 {
-	T_INT    =  0,			// ÕûĞÍ                     
-	T_CHAR   =  1,			// ×Ö·ûĞÍ                 
-	T_SHORT  =  2,			// ¶ÌÕûĞÍ                       
-	T_VOID   =  3,			// ¿ÕÀàĞÍ                        
-	T_PTR    =  4,			// Ö¸Õë                          
-	T_FUNC   =  5,			// º¯Êı                    
-	T_STRUCT =  6,			// ½á¹¹Ìå 
+	T_INT    =  0,			// æ•´å‹                     
+	T_CHAR   =  1,			// å­—ç¬¦å‹                 
+	T_SHORT  =  2,			// çŸ­æ•´å‹                       
+	T_VOID   =  3,			// ç©ºç±»å‹                        
+	T_PTR    =  4,			// æŒ‡é’ˆ                          
+	T_FUNC   =  5,			// å‡½æ•°                    
+	T_STRUCT =  6,			// ç»“æ„ä½“ 
 	
-	T_BTYPE  =  0x000f,		// »ù±¾ÀàĞÍÑÚÂë          
-	T_ARRAY  =  0x0010,		// Êı×é
+	T_BTYPE  =  0x000f,		// åŸºæœ¬ç±»å‹æ©ç           
+	T_ARRAY  =  0x0010,		// æ•°ç»„
 };
 
-#define ALIGN_SET 0x100  // Ç¿ÖÆ¶ÔÆë±êÖ¾
+#define ALIGN_SET 0x100  // å¼ºåˆ¶å¯¹é½æ ‡å¿—
 
 extern int syntax_state;
 extern int syntax_level;

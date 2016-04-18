@@ -1,4 +1,4 @@
-// ¡¶×Ô¼º¶¯ÊÖĞ´±àÒëÆ÷¡¢Á´½ÓÆ÷¡·ÅäÌ×Ô´´úÂë
+// ã€Šè‡ªå·±åŠ¨æ‰‹å†™ç¼–è¯‘å™¨ã€é“¾æ¥å™¨ã€‹é…å¥—æºä»£ç 
 
 #include "scc.h"
 char *entry_symbol = "_entry";
@@ -8,11 +8,11 @@ char *lib_path;
 short subsystem;
 
 /* -----------------------------------------------------------
- * ÉùÃ÷PEÍ·±äÁ¿£¬²¢½øĞĞ³õÊ¼»¯
+ * å£°æ˜PEå¤´å˜é‡ï¼Œå¹¶è¿›è¡Œåˆå§‹åŒ–
  ----------------------------------------------------------- */
 IMAGE_DOS_HEADER dos_header = {
     /* IMAGE_DOS_HEADER doshdr */
-    0x5A4D, /*WORD e_magic;         DOS¿ÉÖ´ĞĞÎÄ¼ş±ê¼Ç,Îª'MZ'  */
+    0x5A4D, /*WORD e_magic;         DOSå¯æ‰§è¡Œæ–‡ä»¶æ ‡è®°,ä¸º'MZ'  */
     0x0090, /*WORD e_cblp;          Bytes on last page of file */
     0x0003, /*WORD e_cp;            Pages in file */
     0x0000, /*WORD e_crlc;          Relocations */
@@ -20,19 +20,19 @@ IMAGE_DOS_HEADER dos_header = {
     0x0004, /*WORD e_cparhdr;       Size of header in paragraphs */
     0x0000, /*WORD e_minalloc;      Minimum extra paragraphs needed */
     0xFFFF, /*WORD e_maxalloc;      Maximum extra paragraphs needed */
-    0x0000, /*WORD e_ss;            DOS´úÂëµÄ³õÊ¼»¯¶ÑÕ»¶Î */
+    0x0000, /*WORD e_ss;            DOSä»£ç çš„åˆå§‹åŒ–å †æ ˆæ®µ */
 
-    0x00B8, /*WORD e_sp;            DOS´úÂëµÄ³õÊ¼»¯¶ÑÕ»Ö¸Õë */
+    0x00B8, /*WORD e_sp;            DOSä»£ç çš„åˆå§‹åŒ–å †æ ˆæŒ‡é’ˆ */
     0x0000, /*WORD e_csum;          Checksum */
-    0x0000, /*WORD e_ip;            DOS´úÂëµÄÈë¿ÚIP */
-    0x0000, /*WORD e_cs;            DOS´úÂëµÄÈë¿ÚCS */
+    0x0000, /*WORD e_ip;            DOSä»£ç çš„å…¥å£IP */
+    0x0000, /*WORD e_cs;            DOSä»£ç çš„å…¥å£CS */
     0x0040, /*WORD e_lfarlc;        File address of relocation table */
     0x0000, /*WORD e_ovno;          Overlay number */
     {0,0,0,0}, /*WORD e_res[4];     Reserved words */
     0x0000, /*WORD e_oemid;         OEM identifier (for e_oeminfo) */
     0x0000, /*WORD e_oeminfo;       OEM information; e_oemid specific */
     {0,0,0,0,0,0,0,0,0,0}, /*WORD e_res2[10];      Reserved words */
-    0x00000080  /*DWORD   e_lfanew;        Ö¸ÏòPEÎÄ¼şÍ· */
+    0x00000080  /*DWORD   e_lfanew;        æŒ‡å‘PEæ–‡ä»¶å¤´ */
 };
 
 BYTE dos_stub[0x40] = {
@@ -45,54 +45,54 @@ BYTE dos_stub[0x40] = {
 	};
 
 IMAGE_NT_HEADERS32 nt_header = {
-    0x00004550, /* DWORD Signature = IMAGE_NT_SIGNATURE PEÎÄ¼ş±êÊ¶*/
+    0x00004550, /* DWORD Signature = IMAGE_NT_SIGNATURE PEæ–‡ä»¶æ ‡è¯†*/
 	{
 		/* IMAGE_FILE_HEADER FileHeader */
-		0x014C,		/*WORD    Machine; ÔËĞĞÆ½Ì¨*/
-		0x0003,		/*WORD    NumberOfSections; ÎÄ¼şµÄ½ÚÊıÄ¿ */
-		0x00000000, /*DWORD   TimeDateStamp; ÎÄ¼şµÄ´´½¨ÈÕÆÚºÍÊ±¼ä*/
-		0x00000000, /*DWORD   PointerToSymbolTable; Ö¸Ïò·ûºÅ±í(ÓÃÓÚµ÷ÊÔ)*/
-		0x00000000, /*DWORD   NumberOfSymbols; ·ûºÅ±íÖĞµÄ·ûºÅÊıÁ¿£¨ÓÃÓÚµ÷ÊÔ£©*/
-		0x00E0,		/*WORD    SizeOfOptionalHeader; IMAGE_OPTIONAL_HEADER32½á¹¹µÄ³¤¶È*/
-		0x030F		/*WORD    Characteristics; ÎÄ¼şÊôĞÔ*/
+		0x014C,		/*WORD    Machine; è¿è¡Œå¹³å°*/
+		0x0003,		/*WORD    NumberOfSections; æ–‡ä»¶çš„èŠ‚æ•°ç›® */
+		0x00000000, /*DWORD   TimeDateStamp; æ–‡ä»¶çš„åˆ›å»ºæ—¥æœŸå’Œæ—¶é—´*/
+		0x00000000, /*DWORD   PointerToSymbolTable; æŒ‡å‘ç¬¦å·è¡¨(ç”¨äºè°ƒè¯•)*/
+		0x00000000, /*DWORD   NumberOfSymbols; ç¬¦å·è¡¨ä¸­çš„ç¬¦å·æ•°é‡ï¼ˆç”¨äºè°ƒè¯•ï¼‰*/
+		0x00E0,		/*WORD    SizeOfOptionalHeader; IMAGE_OPTIONAL_HEADER32ç»“æ„çš„é•¿åº¦*/
+		0x030F		/*WORD    Characteristics; æ–‡ä»¶å±æ€§*/
 	},
 	{
 	    /* IMAGE_OPTIONAL_HEADER OptionalHeader */
-		/* ±ê×¼Óò. */
+		/* æ ‡å‡†åŸŸ. */
 		0x010B, /*WORD    Magic; */
-		0x06, /*BYTE    MajorLinkerVersion; Á´½ÓÆ÷Ö÷°æ±¾ºÅ*/
-		0x00, /*BYTE    MinorLinkerVersion; Á´½ÓÆ÷´Î°æ±¾ºÅ*/
-		0x00000000, /*DWORD   SizeOfCode; ËùÓĞº¬´úÂë¶ÎµÄ×Ü´óĞ¡*/
-		0x00000000, /*DWORD   SizeOfInitializedData; ËùÓĞÒÑ³õÊ¼»¯Êı¾İ¶ÎµÄ×Ü´óĞ¡*/
-		0x00000000, /*DWORD   SizeOfUninitializedData; ËùÓĞº¬ÓĞÎ´³õÊ¼»¯Êı¾İ¶ÎµÄ´óĞ¡*/
-		0x00000000, /*DWORD   AddressOfEntryPoint; ³ÌĞòÖ´ĞĞÈë¿ÚµÄÏà¶ÔĞéÄâµØÖ·*/
-		0x00000000, /*DWORD   BaseOfCode; ´úÂë¶ÎµÄÆğÊ¼RVA*/
-		0x00000000, /*DWORD   BaseOfData; ´úÂë¶ÎµÄÆğÊ¼RVA*/
+		0x06, /*BYTE    MajorLinkerVersion; é“¾æ¥å™¨ä¸»ç‰ˆæœ¬å·*/
+		0x00, /*BYTE    MinorLinkerVersion; é“¾æ¥å™¨æ¬¡ç‰ˆæœ¬å·*/
+		0x00000000, /*DWORD   SizeOfCode; æ‰€æœ‰å«ä»£ç æ®µçš„æ€»å¤§å°*/
+		0x00000000, /*DWORD   SizeOfInitializedData; æ‰€æœ‰å·²åˆå§‹åŒ–æ•°æ®æ®µçš„æ€»å¤§å°*/
+		0x00000000, /*DWORD   SizeOfUninitializedData; æ‰€æœ‰å«æœ‰æœªåˆå§‹åŒ–æ•°æ®æ®µçš„å¤§å°*/
+		0x00000000, /*DWORD   AddressOfEntryPoint; ç¨‹åºæ‰§è¡Œå…¥å£çš„ç›¸å¯¹è™šæ‹Ÿåœ°å€*/
+		0x00000000, /*DWORD   BaseOfCode; ä»£ç æ®µçš„èµ·å§‹RVA*/
+		0x00000000, /*DWORD   BaseOfData; ä»£ç æ®µçš„èµ·å§‹RVA*/
 		
-		/* NT¸½¼ÓÓò */
-		0x00400000, /*DWORD   ImageBase; ³ÌĞòµÄ½¨Òé×°ÔØµØÖ· ½²Ò»ÏÂWindowsÄÚ´æ½á¹¹£¬Èç¹û´óÓÚ0x80000000»áÓĞÊ²Ã´ºó¹û*/
-		0x00001000, /*DWORD   SectionAlignment; ÄÚ´æÖĞ¶ÎµÄ¶ÔÆëÁ£¶È*/
-		0x00000200, /*DWORD   FileAlignment; ÎÄ¼şÖĞ¶ÎµÄ¶ÔÆëÁ£¶È*/
-		0x0004, /*WORD    MajorOperatingSystemVersion; ²Ù×÷ÏµÍ³µÄÖ÷°æ±¾ºÅ*/
-		0x0000, /*WORD    MinorOperatingSystemVersion; ²Ù×÷ÏµÍ³µÄ´Î°æ±¾ºÅ*/
-		0x0000, /*WORD    MajorImageVersion; ³ÌĞòµÄÖ÷°æ±¾ºÅ*/
-		0x0000, /*WORD    MinorImageVersion; ³ÌĞòµÄ´Î°æ±¾ºÅ*/
-		0x0004, /*WORD    MajorSubsystemVersion; ×ÓÏµÍ³µÄÖ÷°æ±¾ºÅ*/
-		0x0000, /*WORD    MinorSubsystemVersion; ×ÓÏµÍ³µÄ´Î°æ±¾ºÅ*/
-		0x00000000, /*DWORD   Win32VersionValue; ±£Áô£¬ÉèÎª0*/
-		0x00000000, /*DWORD   SizeOfImage; ÄÚ´æÖĞÕû¸öPEÓ³Ïñ³ß´ç*/
-		0x00000200, /*DWORD   SizeOfHeaders; ËùÓĞÍ·+½Ú±íµÄ´óĞ¡*/
-		0x00000000, /*DWORD   CheckSum; Ğ£ÑéºÍ*/
-		0x0003, /*WORD    Subsystem; ÎÄ¼şµÄ×ÓÏµÍ³*/
+		/* NTé™„åŠ åŸŸ */
+		0x00400000, /*DWORD   ImageBase; ç¨‹åºçš„å»ºè®®è£…è½½åœ°å€ è®²ä¸€ä¸‹Windowså†…å­˜ç»“æ„ï¼Œå¦‚æœå¤§äº0x80000000ä¼šæœ‰ä»€ä¹ˆåæœ*/
+		0x00001000, /*DWORD   SectionAlignment; å†…å­˜ä¸­æ®µçš„å¯¹é½ç²’åº¦*/
+		0x00000200, /*DWORD   FileAlignment; æ–‡ä»¶ä¸­æ®µçš„å¯¹é½ç²’åº¦*/
+		0x0004, /*WORD    MajorOperatingSystemVersion; æ“ä½œç³»ç»Ÿçš„ä¸»ç‰ˆæœ¬å·*/
+		0x0000, /*WORD    MinorOperatingSystemVersion; æ“ä½œç³»ç»Ÿçš„æ¬¡ç‰ˆæœ¬å·*/
+		0x0000, /*WORD    MajorImageVersion; ç¨‹åºçš„ä¸»ç‰ˆæœ¬å·*/
+		0x0000, /*WORD    MinorImageVersion; ç¨‹åºçš„æ¬¡ç‰ˆæœ¬å·*/
+		0x0004, /*WORD    MajorSubsystemVersion; å­ç³»ç»Ÿçš„ä¸»ç‰ˆæœ¬å·*/
+		0x0000, /*WORD    MinorSubsystemVersion; å­ç³»ç»Ÿçš„æ¬¡ç‰ˆæœ¬å·*/
+		0x00000000, /*DWORD   Win32VersionValue; ä¿ç•™ï¼Œè®¾ä¸º0*/
+		0x00000000, /*DWORD   SizeOfImage; å†…å­˜ä¸­æ•´ä¸ªPEæ˜ åƒå°ºå¯¸*/
+		0x00000200, /*DWORD   SizeOfHeaders; æ‰€æœ‰å¤´+èŠ‚è¡¨çš„å¤§å°*/
+		0x00000000, /*DWORD   CheckSum; æ ¡éªŒå’Œ*/
+		0x0003, /*WORD    Subsystem; æ–‡ä»¶çš„å­ç³»ç»Ÿ*/
 		0x0000, /*WORD    DllCharacteristics; */
-		0x00100000, /*DWORD   SizeOfStackReserve; ³õÊ¼»¯Ê±¶ÑÕ»´óĞ¡*/
-		0x00001000, /*DWORD   SizeOfStackCommit; ³õÊ¼»¯Ê±Êµ¼ÊÌá½»µÄ¶ÑÕ»´óĞ¡*/
-		0x00100000, /*DWORD   SizeOfHeapReserve; ³õÊ¼»¯Ê±±£ÁôµÄ¶Ñ´óĞ¡*/
-		0x00001000, /*DWORD   SizeOfHeapCommit; ³õÊ¼»¯Ê±Êµ¼ÊÌá½»µÄ¶Ñ´óĞ¡*/
-		0x00000000, /*DWORD   LoaderFlags; ±£Áô£¬ÉèÎª0*/
-		0x00000010, /*DWORD   NumberOfRvaAndSizes; ÏÂÃæµÄÊı¾İÄ¿Â¼½á¹¹µÄÊıÁ¿*/
+		0x00100000, /*DWORD   SizeOfStackReserve; åˆå§‹åŒ–æ—¶å †æ ˆå¤§å°*/
+		0x00001000, /*DWORD   SizeOfStackCommit; åˆå§‹åŒ–æ—¶å®é™…æäº¤çš„å †æ ˆå¤§å°*/
+		0x00100000, /*DWORD   SizeOfHeapReserve; åˆå§‹åŒ–æ—¶ä¿ç•™çš„å †å¤§å°*/
+		0x00001000, /*DWORD   SizeOfHeapCommit; åˆå§‹åŒ–æ—¶å®é™…æäº¤çš„å †å¤§å°*/
+		0x00000000, /*DWORD   LoaderFlags; ä¿ç•™ï¼Œè®¾ä¸º0*/
+		0x00000010, /*DWORD   NumberOfRvaAndSizes; ä¸‹é¢çš„æ•°æ®ç›®å½•ç»“æ„çš„æ•°é‡*/
 				
-				/* IMAGE_DATA_DIRECTORY DataDirectory[16]; Êı¾İÄ¿Â¼*/
+				/* IMAGE_DATA_DIRECTORY DataDirectory[16]; æ•°æ®ç›®å½•*/
 		{{0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0},
 		{0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}}
 	}};
@@ -101,30 +101,30 @@ IMAGE_NT_HEADERS32 nt_header = {
 /* ------------------------------------------------------------- */
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÆËãÎÄ¼ş¶ÔÆëÎ»ÖÃ
- * n:		Î´¶ÔÆëÇ°Î»ÖÃ
+ * åŠŸèƒ½:	è®¡ç®—æ–‡ä»¶å¯¹é½ä½ç½®
+ * n:		æœªå¯¹é½å‰ä½ç½®
  **********************************************************/	
 DWORD pe_file_align(DWORD n)
 {
-	DWORD FileAlignment = nt_header.OptionalHeader.FileAlignment; //ÎÄ¼şÖĞ¶ÎµÄ¶ÔÆëÁ£¶È
+	DWORD FileAlignment = nt_header.OptionalHeader.FileAlignment; //æ–‡ä»¶ä¸­æ®µçš„å¯¹é½ç²’åº¦
 	return calc_align(n,FileAlignment);
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÆËãÄÚ´æ¶ÔÆëÎ»ÖÃ
- * n:		Î´¶ÔÆëÇ°Î»ÖÃ
+ * åŠŸèƒ½:	è®¡ç®—å†…å­˜å¯¹é½ä½ç½®
+ * n:		æœªå¯¹é½å‰ä½ç½®
  **********************************************************/	
 DWORD pe_virtual_align(DWORD n)
 { 
-	DWORD SectionAlignment = nt_header.OptionalHeader.SectionAlignment; //ÄÚ´æÖĞ¶ÎµÄ¶ÔÆëÁ£¶È
+	DWORD SectionAlignment = nt_header.OptionalHeader.SectionAlignment; //å†…å­˜ä¸­æ®µçš„å¯¹é½ç²’åº¦
 	return calc_align(n,SectionAlignment);
 } 
 
 /***********************************************************
- * ¹¦ÄÜ:	ÉèÖÃÊı¾İÄ¿Â¼
- * dir:		Ä¿Â¼ÀàĞÍ
- * addr:	±íµÄRVA
- * size:	±íµÄ´óĞ¡(ÒÔ×Ö½Ú¼Æ)
+ * åŠŸèƒ½:	è®¾ç½®æ•°æ®ç›®å½•
+ * dir:		ç›®å½•ç±»å‹
+ * addr:	è¡¨çš„RVA
+ * size:	è¡¨çš„å¤§å°(ä»¥å­—èŠ‚è®¡)
  **********************************************************/	
 void pe_set_datadir(int dir, DWORD addr, DWORD size)
 {
@@ -133,8 +133,8 @@ void pe_set_datadir(int dir, DWORD addr, DWORD size)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÓÔØÄ¿±êÎÄ¼ş
- * fname:	Ä¿±êÎÄ¼şÃû
+ * åŠŸèƒ½:	åŠ è½½ç›®æ ‡æ–‡ä»¶
+ * fname:	ç›®æ ‡æ–‡ä»¶å
  **********************************************************/	
 int load_obj_file(char *fname)
 {
@@ -213,10 +213,10 @@ int load_obj_file(char *fname)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	´Ó¾²Ì¬¿âÎÄ¼şÖĞ¶ÁÈ¡Ò»ĞĞ,²¢´¦ÀíµôÎŞĞ§×Ö·û
- * line:	Êı¾İ´æ´¢Î»ÖÃ
- * size:	¶ÁÈ¡µÄ×î´ó×Ö·ûÊı
- * fp:		ÒÑ´ò¿ªµÄ¾²Ì¬¿âÎÄ¼şÖ¸Õë
+ * åŠŸèƒ½:	ä»é™æ€åº“æ–‡ä»¶ä¸­è¯»å–ä¸€è¡Œ,å¹¶å¤„ç†æ‰æ— æ•ˆå­—ç¬¦
+ * line:	æ•°æ®å­˜å‚¨ä½ç½®
+ * size:	è¯»å–çš„æœ€å¤§å­—ç¬¦æ•°
+ * fp:		å·²æ‰“å¼€çš„é™æ€åº“æ–‡ä»¶æŒ‡é’ˆ
  **********************************************************/	
 char *get_line(char *line, int size, FILE *fp)
 {
@@ -224,12 +224,12 @@ char *get_line(char *line, int size, FILE *fp)
     if (NULL == fgets(line, size, fp))
         return NULL;
 
-	//È¥µô×ó¿Õ¸ñ
+	//å»æ‰å·¦ç©ºæ ¼
 	p = line;
 	while (*p && isspace(*p))
         p++;
     
-	//È¥µôÓÒ¿Õ¸ñ¼°»Ø³µ·û
+	//å»æ‰å³ç©ºæ ¼åŠå›è½¦ç¬¦
 	p1 = strchr(p,'\0');
 	while(p1 > p && p1[-1] <= ' ' ) 
 		p1--;
@@ -239,8 +239,8 @@ char *get_line(char *line, int size, FILE *fp)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	ÓÉlibfileµÃµ½ÏàÓ¦dllÃû
- * libfile: ¾²Ì¬¿âÎÄ¼şÃû
+ * åŠŸèƒ½:	ç”±libfileå¾—åˆ°ç›¸åº”dllå
+ * libfile: é™æ€åº“æ–‡ä»¶å
  **********************************************************/
 char *get_dllname(char *libfile)
 {
@@ -265,8 +265,8 @@ char *get_dllname(char *libfile)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÓÔØ¾²Ì¬¿â
- * name:    ¾²Ì¬¿âÎÄ¼şÃû,²»°üÀ¨Â·¾¶ºÍºó×º
+ * åŠŸèƒ½:	åŠ è½½é™æ€åº“
+ * name:    é™æ€åº“æ–‡ä»¶å,ä¸åŒ…æ‹¬è·¯å¾„å’Œåç¼€
  **********************************************************/
 int pe_load_lib_file(char *name)
 {
@@ -287,7 +287,7 @@ int pe_load_lib_file(char *name)
 				break;
 			if (0 == *p || ';' == *p)
 				continue;  
-			coffsym_add(sec_dynsymtab, p, array_dll.count, sec_text->index, CST_FUNC,IMAGE_SYM_CLASS_EXTERNAL); //´Ë´¦ÓĞÎÊÌâ£¬i>180Ê±³ÌĞòÃ»ÓĞÏìÓ¦ÁË
+			coffsym_add(sec_dynsymtab, p, array_dll.count, sec_text->index, CST_FUNC,IMAGE_SYM_CLASS_EXTERNAL); //æ­¤å¤„æœ‰é—®é¢˜ï¼Œi>180æ—¶ç¨‹åºæ²¡æœ‰å“åº”äº†
 		}
 		ret = 0; 
 		if (fp)
@@ -295,14 +295,14 @@ int pe_load_lib_file(char *name)
 	}
 	else
 	{
-		link_error("\"%s\" ÎÄ¼ş´ò¿ªÊ§°Ü",libfile);
+		link_error("\"%s\" æ–‡ä»¶æ‰“å¼€å¤±è´¥",libfile);
 	}        
     return ret;
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÆËã³ÌĞòÈë¿Úµã
- * pe:		PEĞÅÏ¢´æ´¢½á¹¹Ö¸Õë
+ * åŠŸèƒ½:	è®¡ç®—ç¨‹åºå…¥å£ç‚¹
+ * pe:		PEä¿¡æ¯å­˜å‚¨ç»“æ„æŒ‡é’ˆ
  **********************************************************/
 void get_entry_addr(struct PEInfo *pe)
 {   
@@ -316,12 +316,12 @@ void get_entry_addr(struct PEInfo *pe)
 }
 
 /*********************************************************** 
- * ¹¦ÄÜ:	µÃµ½·ÅÖÃ¾²Ì¬¿âµÄÄ¿Â¼
+ * åŠŸèƒ½:	å¾—åˆ°æ”¾ç½®é™æ€åº“çš„ç›®å½•
  **********************************************************/
 char *get_lib_path()
 {
-    /* ÎÒÃÇ¼Ù¶¨±àÒëĞèÒªÁ´½ÓµÄ¾²Ì¬¿â·ÅÔÚÓë±àÒëÆ÷Í¬¼¶Ä¿Â¼µÄlibÎÄ¼ş¼ĞÏÂ
-	   ´Ë´¦ĞèÒª½²Ò»ÏÂ¾²Ì¬¿â
+    /* æˆ‘ä»¬å‡å®šç¼–è¯‘éœ€è¦é“¾æ¥çš„é™æ€åº“æ”¾åœ¨ä¸ç¼–è¯‘å™¨åŒçº§ç›®å½•çš„libæ–‡ä»¶å¤¹ä¸‹
+	   æ­¤å¤„éœ€è¦è®²ä¸€ä¸‹é™æ€åº“
 	*/
     char path[MAX_PATH];
 	char *p;
@@ -333,7 +333,7 @@ char *get_lib_path()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÓÔØĞèÒªÁ´½ÓµÄ¾²Ì¬¿â
+ * åŠŸèƒ½:	åŠ è½½éœ€è¦é“¾æ¥çš„é™æ€åº“
  **********************************************************/
 void add_runtime_libs()
 { 
@@ -348,8 +348,8 @@ void add_runtime_libs()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	²éÕÒµ¼Èëº¯Êı
- * symbol:  ·ûºÅÃû
+ * åŠŸèƒ½:	æŸ¥æ‰¾å¯¼å…¥å‡½æ•°
+ * symbol:  ç¬¦å·å
  **********************************************************/
 int pe_find_import(char *symbol)
 {
@@ -359,10 +359,10 @@ int pe_find_import(char *symbol)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:		Ôö¼Óµ¼Èëº¯Êı
- * pe:			PEĞÅÏ¢´æ´¢½á¹¹Ö¸Õë
- * sym_index:	·ûºÅ±íµÄË÷Òı
- * name:		·ûºÅÃû
+ * åŠŸèƒ½:		å¢åŠ å¯¼å…¥å‡½æ•°
+ * pe:			PEä¿¡æ¯å­˜å‚¨ç»“æ„æŒ‡é’ˆ
+ * sym_index:	ç¬¦å·è¡¨çš„ç´¢å¼•
+ * name:		ç¬¦å·å
  **********************************************************/
 struct ImportSym *pe_add_import(struct PEInfo *pe, int sym_index, char *name)
 {
@@ -388,7 +388,7 @@ struct ImportSym *pe_add_import(struct PEInfo *pe, int sym_index, char *name)
 	}
 
     i = dynarray_search(&p->imp_syms,sym_index);
-    if (-1 != i)//ÕÒµ½Ö±½Ó·µ»Ø£¬ÕÒ²»µ½ÔòÌî¼Ó
+    if (-1 != i)//æ‰¾åˆ°ç›´æ¥è¿”å›ï¼Œæ‰¾ä¸åˆ°åˆ™å¡«åŠ 
 	{
         return (struct ImportSym*)p->imp_syms.data[i];
 	}
@@ -402,8 +402,8 @@ struct ImportSym *pe_add_import(struct PEInfo *pe, int sym_index, char *name)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	½âÎö³ÌĞòÖĞÓÃµ½µÄÍâ²¿·ûºÅ
- * pe:		PEĞÅÏ¢´æ´¢½á¹¹Ö¸Õë
+ * åŠŸèƒ½:	è§£æç¨‹åºä¸­ç”¨åˆ°çš„å¤–éƒ¨ç¬¦å·
+ * pe:		PEä¿¡æ¯å­˜å‚¨ç»“æ„æŒ‡é’ˆ
  **********************************************************/
 int resolve_coffsyms(struct PEInfo *pe)
 {
@@ -453,7 +453,7 @@ int resolve_coffsyms(struct PEInfo *pe)
             }
 			else
 			{
-				link_error("'%s'Î´¶¨Òå", name);
+				link_error("'%s'æœªå®šä¹‰", name);
 				ret = 1;
 			}
         }
@@ -462,9 +462,9 @@ int resolve_coffsyms(struct PEInfo *pe)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	Ïòµ¼Èë·ûºÅ±íÖĞĞ´Èë·ûºÅ×Ö·û´®(dllÃû³Æ»òµ¼Èë·ûºÅ)
- * sec:		µ¼Èë·ûºÅËùÔÚ½Ú
- * sym:		·ûºÅÃû³Æ
+ * åŠŸèƒ½:	å‘å¯¼å…¥ç¬¦å·è¡¨ä¸­å†™å…¥ç¬¦å·å­—ç¬¦ä¸²(dllåç§°æˆ–å¯¼å…¥ç¬¦å·)
+ * sec:		å¯¼å…¥ç¬¦å·æ‰€åœ¨èŠ‚
+ * sym:		ç¬¦å·åç§°
  **********************************************************/
 int put_import_str(Section *sec, char *sym)
 {
@@ -478,8 +478,8 @@ int put_import_str(Section *sec, char *sym)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	´´½¨µ¼ÈëĞÅÏ¢£¨µ¼ÈëÄ¿Â¼±í¼°µ¼Èë·ûºÅ±í£©
- * pe:		pe:		PEĞÅÏ¢´æ´¢½á¹¹Ö¸Õë
+ * åŠŸèƒ½:	åˆ›å»ºå¯¼å…¥ä¿¡æ¯ï¼ˆå¯¼å…¥ç›®å½•è¡¨åŠå¯¼å…¥ç¬¦å·è¡¨ï¼‰
+ * pe:		pe:		PEä¿¡æ¯å­˜å‚¨ç»“æ„æŒ‡é’ˆ
  **********************************************************/
 void pe_build_imports(struct PEInfo *pe)
 {
@@ -497,7 +497,7 @@ void pe_build_imports(struct PEInfo *pe)
     pe->imp_size = (ndlls + 1) * sizeof(IMAGE_IMPORT_DESCRIPTOR);
     pe->iat_offs = dll_ptr + pe->imp_size;
     pe->iat_size = (sym_cnt + ndlls) * sizeof(DWORD);
-    section_ptr_add(pe->thunk, pe->imp_size + 2*pe->iat_size);//Ô¤Áô³ödllµ¼³ö±í¼°iat±í¿Õ¼ä
+    section_ptr_add(pe->thunk, pe->imp_size + 2*pe->iat_size);//é¢„ç•™å‡ºdllå¯¼å‡ºè¡¨åŠiatè¡¨ç©ºé—´
 
     thk_ptr = pe->iat_offs;
     ent_ptr = pe->iat_offs + pe->iat_size;
@@ -508,13 +508,13 @@ void pe_build_imports(struct PEInfo *pe)
         struct ImportInfo *p = pe->imps.data[i];
 		char *name = array_dll.data[p->dll_index-1];   
 
-        /* Ğ´ÈëdllÃû³Æ */
+        /* å†™å…¥dllåç§° */
         v = put_import_str(pe->thunk, name);
         
 		p->imphdr.FirstThunk  = thk_ptr + rva_base;
         p->imphdr.OriginalFirstThunk = ent_ptr + rva_base;
         p->imphdr.Name = v + rva_base;
-		memcpy(pe->thunk->data + dll_ptr,&p->imphdr,sizeof(IMAGE_IMPORT_DESCRIPTOR)); //Ôö¼Óµ¼Èë±íÌõÄ¿
+		memcpy(pe->thunk->data + dll_ptr,&p->imphdr,sizeof(IMAGE_IMPORT_DESCRIPTOR)); //å¢åŠ å¯¼å…¥è¡¨æ¡ç›®
 
         for (k = 0, n = p->imp_syms.count; k <= n; ++k) 
 		{
@@ -548,8 +548,8 @@ void pe_build_imports(struct PEInfo *pe)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	¼ÆËã½ÚÇøµÄRVAµØÖ·
- * pe:		PEĞÅÏ¢´æ´¢½á¹¹Ö¸Õë
+ * åŠŸèƒ½:	è®¡ç®—èŠ‚åŒºçš„RVAåœ°å€
+ * pe:		PEä¿¡æ¯å­˜å‚¨ç»“æ„æŒ‡é’ˆ
  **********************************************************/
 int pe_assign_addresses(struct PEInfo *pe)
 {
@@ -585,7 +585,7 @@ int pe_assign_addresses(struct PEInfo *pe)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	ÖØ¶¨Î»·ûºÅµØÖ·
+ * åŠŸèƒ½:	é‡å®šä½ç¬¦å·åœ°å€
  **********************************************************/
 void relocate_syms()
 {
@@ -596,14 +596,14 @@ void relocate_syms()
     for(sym = (CoffSym *)sec_symtab->data + 1; sym < sym_end; sym++) 
 	{
 		sec = (Section*)sections.data[sym->Section-1];        
-		sym->Value += sec->sh.VirtualAddress; // ¼ÓÉÏ½ÚÇøµÄRVAµØÖ·
+		sym->Value += sec->sh.VirtualAddress; // åŠ ä¸ŠèŠ‚åŒºçš„RVAåœ°å€
     }
 }
 
-/*Ö±½ÓÖØ¶¨Î»--È«¾Ö±äÁ¿ ¼ä½ÓÖØ¶¨Î»--º¯Êıµ÷ÓÃ*/
-/*wndclass.lpfnWndProc   = WndProc ;ÊôÓÚÖ±½ÓÖØ¶¨Î»*/
+/*ç›´æ¥é‡å®šä½--å…¨å±€å˜é‡ é—´æ¥é‡å®šä½--å‡½æ•°è°ƒç”¨*/
+/*wndclass.lpfnWndProc   = WndProc ;å±äºç›´æ¥é‡å®šä½*/
 /***********************************************************
- * ¹¦ÄÜ:	ĞŞÕıĞèÒª½øĞĞÖØ¶¨Î»µÄ´úÂë»òÊı¾İµÄµØÖ·
+ * åŠŸèƒ½:	ä¿®æ­£éœ€è¦è¿›è¡Œé‡å®šä½çš„ä»£ç æˆ–æ•°æ®çš„åœ°å€
  **********************************************************/
 void coffrelocs_fixup()
 {
@@ -633,10 +633,10 @@ void coffrelocs_fixup()
 		ptr = sec->data + rel->offset;				
         switch(type) 
 		{
-        case IMAGE_REL_I386_DIR32:  //È«¾Ö±äÁ¿
+        case IMAGE_REL_I386_DIR32:  //å…¨å±€å˜é‡
             *(int *)ptr += val;
             break;
-        case IMAGE_REL_I386_REL32:  //º¯Êıµ÷ÓÃ
+        case IMAGE_REL_I386_REL32:  //å‡½æ•°è°ƒç”¨
             *(int *)ptr += val - addr;
             break;
         }
@@ -644,8 +644,8 @@ void coffrelocs_fixup()
 }
 
 /***********************************************************
- * ¹¦ÄÜ:	Ğ´PEÎÄ¼ş
- * pe:		PEĞÅÏ¢´æ´¢½á¹¹Ö¸Õë
+ * åŠŸèƒ½:	å†™PEæ–‡ä»¶
+ * pe:		PEä¿¡æ¯å­˜å‚¨ç»“æ„æŒ‡é’ˆ
  **********************************************************/
 int pe_write(struct PEInfo *pe)
 {
@@ -657,7 +657,7 @@ int pe_write(struct PEInfo *pe)
     op = fopen(pe->filename, "wb");
     if (NULL == op) 
 	{
-        link_error("'%s'Éú³ÉÊ§°Ü", pe->filename);
+        link_error("'%s'ç”Ÿæˆå¤±è´¥", pe->filename);
         return 1;
     }
 
@@ -738,8 +738,8 @@ int pe_write(struct PEInfo *pe)
 }
 
 /***********************************************************
- * ¹¦ÄÜ:		Êä³öPEÎÄ¼ş
- * filename:	EXEÎÄ¼şÃû
+ * åŠŸèƒ½:		è¾“å‡ºPEæ–‡ä»¶
+ * filename:	EXEæ–‡ä»¶å
  **********************************************************/
 int pe_output_file(char *filename)
 {
@@ -749,22 +749,22 @@ int pe_output_file(char *filename)
     memset(&pe, 0, sizeof(pe));
 	dynarray_init(&pe.imps,8);
     pe.filename = filename;
-	/* ¼ÓÔØĞèÒªÁ´½ÓµÄ¾²Ì¬¿â */
+	/* åŠ è½½éœ€è¦é“¾æ¥çš„é™æ€åº“ */
     add_runtime_libs();
-	/* ¼ÆËã³ÌĞòÈë¿Úµã */
+	/* è®¡ç®—ç¨‹åºå…¥å£ç‚¹ */
 	get_entry_addr(&pe);
-	/* ½âÎö³ÌĞòÖĞÓÃµ½µÄÍâ²¿·ûºÅ */
+	/* è§£æç¨‹åºä¸­ç”¨åˆ°çš„å¤–éƒ¨ç¬¦å· */
     ret = resolve_coffsyms(&pe);
     if (0 == ret) 
 	{
 	
-		/* ¼ÆËã½ÚÇøµÄRVAµØÖ· */
+		/* è®¡ç®—èŠ‚åŒºçš„RVAåœ°å€ */
 		pe_assign_addresses(&pe);
-		/* ÖØ¶¨Î»·ûºÅµØÖ· */
+		/* é‡å®šä½ç¬¦å·åœ°å€ */
 		relocate_syms();
-		/* ĞŞÕıĞèÒª½øĞĞÖØ¶¨Î»µÄ´úÂë»òÊı¾İµÄµØÖ· */
+		/* ä¿®æ­£éœ€è¦è¿›è¡Œé‡å®šä½çš„ä»£ç æˆ–æ•°æ®çš„åœ°å€ */
 		coffrelocs_fixup();
-        /* Ğ´PEÎÄ¼ş */
+        /* å†™PEæ–‡ä»¶ */
         ret = pe_write(&pe);
         free(pe.secs);
     }
